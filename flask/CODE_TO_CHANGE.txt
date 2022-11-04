@@ -1,0 +1,183 @@
+--------
+ app.py
+--------
+
+@app.route('/admin/tutorials' , methods=["GET", "POST"])
+def get_all_tutorials():
+    if 'username' in session:
+        current_user = models.Users.objects.get(user_email = session['username'])
+
+        if current_user.user_type == "Admin":
+            if request.method == "GET":
+                tutorials = models.Tutorials.objects()
+
+                return render_template(
+                    "tutorials.html", 
+                    tutorials = tutorials, 
+                    current_user = current_user
+                )
+            elif request.method == "POST":
+                tutorial_name = request.form['tutorial_name']
+
+                tutorial_description = request.form['tutorial_description']
+
+                if tutorial_name == '' or not tutorial_name:
+                    return render_template(
+                        'tutorial.html', 
+                        warningmessage = "Please use a valid Tutorial Name.", 
+                        current_user = current_user
+                    )
+
+                new_tutorial = models.Tutorials(
+                    name = tutorial_name, 
+                    description = tutorial_description
+                )
+                new_tutorial.save()
+
+                dir_url = os.path.join(
+                    "/tutorials",
+                    str(new_tutorial.id)
+                )
+                pathlib.Path(dir_url).mkdir(parents=True, exist_ok=True)
+
+                tutorials = models.Tutorials.objects() 
+
+                return render_template(
+                    "tutorials.html", 
+                    tutorials = tutorials, 
+                    current_user = current_user
+                )
+        else:
+            return redirect(url_for('index'))
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/admin/tutorial/<tutorial_id>' , methods=["GET", "POST"])
+def get_tutorial(tutorial_id):
+    if 'username' in session:
+        current_user = models.Users.objects.get(user_email = session['username'])
+
+        if current_user.user_type == "Admin":
+            if request.method == "GET":
+                tutorial = models.Tutorials.objects.get(id = tutorial_id)
+
+                videos = models.Videos.objects(tutorial_id_reference = tutorial_id)
+
+                return render_template(
+                    "single_tutorial.html",
+                    tutorial = tutorial,
+                    videos = videos, 
+                    current_user = current_user
+                )
+            elif request.method == "POST":
+                # validate fields
+                chapter_number = request.form['chapter_number']
+                lesson_number = request.form['lesson_number']
+                description = request.form['description']
+
+                if not chapter_number and not lesson_number:
+                    return redirect(request.referrer)
+
+                if chapter_number == "" or lesson_number == "":
+                    return redirect(request.referrer)
+
+                if 'video' not in request.files:
+                    return { 'status' : 'File not present.'}
+
+                file = request.files['video']
+                # if user does not select file, submit an empty part without filename
+                if file.filename == '':
+                    return { 'status' : 'File name invalid.'}
+
+                if file:
+                    filename = secure_filename(file.filename)
+
+                    file_url = os.path.join(
+                        "/tutorials", 
+                        tutorial_id, 
+                        chapter_number, 
+                        lesson_number, 
+                        filename
+                    )
+
+                    directory = os.path.dirname(file_url)
+
+                    pathlib.Path(directory).mkdir(
+                        parents=True, 
+                        exist_ok=True
+                    )
+
+                    file.save(file_url)
+
+                    video = models.Videos(
+                        tutorial_id_reference = tutorial_id, 
+                        chapter_number = chapter_number, 
+                        lesson_number = lesson_number, 
+                        description = description, 
+                        video_name = filename, 
+                        video_url = file_url
+                    )
+                    video.save()
+
+                tutorial = models.Tutorials.objects.get(id = tutorial_id)
+
+                videos = models.Videos.objects(tutorial_id_reference = tutorial_id)
+
+                return render_template(
+                    "single_tutorial.html",
+                    tutorial = tutorial,
+                    videos = videos, 
+                    current_user = current_user
+                )
+
+        else:
+            return redirect(url_for('index'))
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/admin/videos/delete/<id>')
+def admin_video_delete(id):
+    if 'username' in session:
+        user = models.Users.objects.get(user_email = session['username'])
+
+        if user.user_type == "Admin":
+            video = models.Videos.objects.get(id = id)
+
+            path = "/tutorials/" + os.path.join(video.tutorial_id_reference, str(video.chapter_number), str(video.lesson_number))
+
+            shutil.rmtree(path, ignore_errors=True)
+
+            video.delete()
+
+            return redirect(request.referrer)
+        else:
+            return redirect(url_for('index'))
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/admin/tutorials/delete/<id>')
+def admin_tutorial_delete(id):
+    if 'username' in session:
+        user = models.Users.objects.get(user_email = session['username'])
+
+        if user.user_type == "Admin":
+            tutorial = models.Tutorials.objects.get(id = id)
+            videos = models.Videos.objects(tutorial_id_reference = str(tutorial.id))
+
+            for video in videos:
+                video.delete()
+
+            path = "/tutorials/" + str(tutorial.id)
+
+            shutil.rmtree(path, ignore_errors=True)
+
+            tutorial.delete()
+
+            return redirect(request.referrer)
+        else:
+            return redirect(url_for('index'))
+    else:
+        return redirect(url_for('login'))

@@ -1,0 +1,11 @@
+flask
+flask_restful
+flask_mail
+requests
+pymongo>=3.4
+mongoengine
+paramiko
+fabric
+pandas
+h5py
+scipy

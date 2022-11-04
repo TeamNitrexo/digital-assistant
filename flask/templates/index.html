@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>BotUI - Hello World</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui-theme-default.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+    #nitrexo-bot {
+        height: 100vh;
+    }
+</style>
+</head>
+<body>
+<div class="botui-app-container" id="nitrexo-bot">
+    <bot-ui></bot-ui>
+</div>
+<script src="https://cdn.jsdelivr.net/vue/latest/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/botui/build/botui.js"></script>
+<script>
+    var botui = new BotUI('nitrexo-bot');
+
+    botui.message.add({
+    content: 'Hi, I am Nebula!'
+    }).then(function () { // wait till previous message has been shown.
+
+    botui.message.add({
+        delay: 200,
+        content: 'How can I help you?'
+    });
+    botui.action.button({
+        action: [
+            { 
+                'text': 'Thermo-Elastic Verification',
+                'value': 'Thermo-Elastic Verification'
+            },
+            {
+                text: 'Temperature Mapping',
+                value: 'Temperature Mapping'
+            },
+            {
+                text: 'Questions Thermo Elastic Verification',
+                value: 'Questions Thermo Elastic Verification'
+            },
+            //{
+            //    text: 'Thermal Model Reduction',
+            //    value: 'Thermal Model Reduction'
+            //},
+            {
+                text: 'Perform TMR',
+                value: 'Perform TMR'
+            },
+        ]
+        }).then(function (res) { // will be called when a button is clicked.
+                console.log(res.value); // will print "one" from 'value'
+                url = '/message?reply=' + res.value
+                $.get(url, function(data, status){
+                //botui.message.add({
+                //    content: data.message
+                //});
+                formatMessage(data);
+            });
+        });
+    });
+</script>
+<script>
+    function addButtons(buttons)
+    {   
+        var actions = []
+        var jsonData = {};
+        buttons.forEach(function(button) 
+        {
+            jsonData = {};
+            console.log(button);
+            var text = button['text'];
+            var value = button['value'];
+            jsonData['text'] = text;
+            jsonData['value'] = value;
+            actions.push(jsonData);
+        });
+        console.log(jsonData);
+        
+        console.log(actions);
+        return actions
+    }
+        function formatMessage(res) {
+            
+            console.log('Inside formatMessage.');
+            console.log(res);
+            if(res.hasOwnProperty('noUserFound')){
+                
+                location.reload();
+                
+                
+            }
+            if(res.hasOwnProperty('message')){
+                
+                var count = res.message.length;
+
+                for(var i = 0; i < count; i++) {
+                    var item = res.message[i];
+                    botui.message.add({
+                        type: item['type'],
+                        content: item['content']
+                    });
+                }
+            }
+            if(res.hasOwnProperty('input')){
+                console.log(res['input']);
+                botui.action.text({
+                    action: {
+                        placeholder: res.input['placeholder']
+                    }
+                }).then(function (res) { // will be called when a button is clicked.
+                            console.log(res.value); // will print "one" from 'value'
+                            url = '/message?question=' + res.value
+                            $.get(url, function(data, status){
+                                formatMessage(data);
+                        });
+                    });
+                
+            }
+            if(res.hasOwnProperty('buttons')){
+                console.log(res['buttons']);
+                var count = res.buttons.length;
+                botui.action.button({
+                    action: addButtons(res['buttons'])
+                }).then(function (res) { // will be called when a button is clicked.
+                            console.log(res.value); // will print "one" from 'value'
+                            url = '/message?reply=' + res.value
+                            $.get(url, function(data, status){
+                                formatMessage(data);
+                        });
+                    });
+                
+            }
+            if(res.hasOwnProperty('sinas_buttons')){
+                console.log(res['sinas_buttons']);
+                var count = res.sinas_buttons.length;
+                botui.action.button({
+                    action: addButtons(res['sinas_buttons'])
+                }).then(function (res) { // will be called when a button is clicked.
+                            console.log(res.value); // will print "one" from 'value'
+                            url = '/sinas?button=' + res.value
+                            $.get(url, function(data, status){
+                                formatMessage(data);
+                        });
+                    });
+                
+            }
+            if(res.hasOwnProperty('sinas_text')){
+                console.log(res['sinas_text']);
+                botui.action.text({
+                    action: {
+                        placeholder: res.sinas_text['placeholder']
+                    }
+                }).then(function (res) { // will be called when a button is clicked.
+                            console.log(res.value); // will print "one" from 'value'
+                            url = '/sinas?text=' + res.value
+                            $.get(url, function(data, status){
+                                formatMessage(data);
+                        });
+                    });
+                
+            }
+        };
+</script>
+<script>
+//     $(document).ready(function(){
+//     $(".file-upload").change(function(){
+//         alert("A file has been selected.");
+//     });
+// });
+</script>
+<script>
+    // $(document).ready(function(){
+    //     // this is the id of the form
+    //         $("#files").submit(function(e) {
+
+    //         e.preventDefault(); // avoid to execute the actual submit of the form.
+
+    //         var form = $(this);
+    //         var url = '/upload';
+
+    //         $.ajax({
+    //             type: "POST",
+    //             url: url,
+    //             data: form.serialize(), // serializes the form's elements.
+    //             success: function(data)
+    //             {
+    //                 alert(data); // show response from the php script.
+    //             }
+    //             });
+
+
+    //         });
+    // });
+</script>
+<script>
+    async function uploadFile() {
+        let formData = new FormData();           
+        formData.append("file", fileupload.files[0]);
+        await fetch('/upload', {
+            method: "POST", 
+            body: formData
+        })
+        .then(document.getElementById("fileupload").id = "")
+        .then(document.getElementById("upload-button").onclick = "")
+        .then((response) => { 
+        return response.text().then((data) => {
+            console.log(data);
+            json_obj = JSON.parse(data);
+            console.log(json_obj);
+            formatMessage(json_obj);
+            return data;
+        }).catch((err) => {
+            console.log(err);
+        }) 
+    });
+        //.then((resp) => console.log(resp.json())) // Transform the data into json
+        //.then(function(resp) {
+        // Create and append the li's to the ul
+        //console.log(resp);
+        //});
+        //.then(formatMessage(data));
+        //.then(response => response.json())
+        //.then(data => formatMessage(data));    
+        //alert('The file has been uploaded successfully.');
+    }
+    </script>
+<script>
+    $(document).ready(function(){
+
+    $("#but_upload").click(function(){
+
+        var fd = new FormData();
+        var files = $('#file')[0].files;
+        
+        // Check file selected or not
+        if(files.length > 0 ){
+        fd.append('file',files[0]);
+
+        $.ajax({
+            url: '/upload',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function(response){
+                if(response != 0){
+                    $("#img").attr("src",response); 
+                    $(".preview img").show(); // Display image element
+                }else{
+                    alert('file not uploaded');
+                }
+            },
+        });
+        }else{
+        alert("Please select a file.");
+        }
+    });
+    });
+</script>
+<script>
+    function addText() {
+        botui.action.text({
+            action: {
+                sub_type: "file",
+                cssClass: 'file-upload',
+                autoHide: false,
+                addMessage: false,
+                button: {
+                icon: 'chevron-circle-right',
+                label: 'Upload'
+                }
+            }
+            }).then(function (res) { // will be called when a button is clicked.
+                            console.log(res.value); // will print "one" from 'value'
+                            botui.message.add({
+                            delay: 200,
+                            type: 'html',
+                            content: '<img src="'+ res.value + '" />'
+                            });
+                        });
+                    
+    }
+</script>
+<script>
+    function addFile() {
+        botui.message.add({
+            
+                            delay: 200,
+                            type: 'html',
+                            content: '<input id="fileupload" type="file" name="fileupload" /><button id="upload-button" onclick="uploadFile()"> Upload </button>'
+            });
+                    
+    }
+</script>
+<script>
+    $(document).ready(function () {
+    $("button#buttonajax").click(function(){
+$.get("/message", function(data, status){
+botui.message.add({
+        content: data.message
+    });
+    botui.action.button({
+action: [
+    { // show only one button
+    text: 'One',
+    value: 'one'
+    },
+    {
+        text: 'Two',
+        value: 'two'
+    }
+]
+}).then(function (res) { // will be called when a button is clicked.
+    console.log(res.value); // will print "one" from 'value'
+    url = '/message?reply=' + res.value
+    $.get(url, function(data, status){
+    botui.message.add({
+        content: data.message
+    });
+});
+});
+});
+    });
+    });
+</script>
+<button onclick="addFile()">Add File</button>
+<button id="buttonajax">Get Message</button>
+<a href="/logout" type="button">Logout</a>
+<div id="div1"></div>
+
+</body>
+</html>

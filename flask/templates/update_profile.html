@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block sidebar %}
+
+{{ super() }}
+
+{% endblock %}
+
+
+{% block dashboard_content %}
+
+
+
+    {% if warningmessage: %}
+    <div class="container-fluid">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{warningmessage}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="container-fluid"  style="margin-top: 70px;">
+        <form action="/profile" method="post">
+            <div class="form-row justify-content-md-center">
+                <div class="form-group col-md-6">
+                    <h2>My Profile</h2>
+                </div>
+            </div>
+            <div class="form-row justify-content-md-center">
+                <div class="form-group col-md-3">
+                    <label for="inputEmail4">First Name</label>
+                    <input type="text" class="form-control" id="inputEmail" placeholder="First Name" name="user_first_name" value="{{user.first_name}}">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="inputPassword4">Last Name</label>
+                    <input type="text" class="form-control" id="inputPassword" placeholder="Last Name" name="user_last_name"  value="{{user.last_name}}">
+                </div>
+            </div>
+            <div class="form-row justify-content-md-center">
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Email</label>
+                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="user_email" value="{{user.user_email}}">
+                </div>
+            </div>
+            <div class="form-row justify-content-md-center">
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4">Password</label>
+                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password" name="user_password" value="{{user.user_password}}">
+                </div>
+              </div>
+              <div class="form-row justify-content-md-center">
+                <div class="form-group col-md-6">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+              
+          </form>
+    </div>
+
+
+{% endblock %}
+
+

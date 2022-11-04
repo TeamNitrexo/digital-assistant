@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Nitrexo - Chatbot</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- Custom styles for this template -->
+  <link href="{{ url_for('static', filename='css/simple-sidebar.css') }}" rel="stylesheet">
+
+  <!-- BotUI Stylilng -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui-theme-default.css" />
+</head>
+
+<body>
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <div class="d-flex" id="wrapper">
+    {% block sidebar%}
+      <!-- Sidebar -->
+      <div class="bg-light border-right" id="sidebar-wrapper">
+          <div class="sidebar-heading">Nitrexo</div>
+
+          <div class="list-group list-group-flush">
+              <a href="/" class="list-group-item list-group-item-action bg-light">Chatbot</a>
+
+              {% if current_user.user_type == "Admin": %}
+                <a href="/admin" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+
+                <a href="/admin/tutorials" class="list-group-item list-group-item-action bg-light">Tutorials</a>
+
+                <a href="/admin/users" class="list-group-item list-group-item-action bg-light">Users</a>
+
+                <a href="/conversations" class="list-group-item list-group-item-action bg-light">Messages Received</a>
+              {% endif %}
+
+              {% if current_user.user_type == "User": %}
+                <a href="/conversations" class="list-group-item list-group-item-action bg-light">Messages Sent</a>
+              {% endif %}
+
+              <a href="/myjobs" class="list-group-item list-group-item-action bg-light">My Sinas Jobs</a>
+
+              <a href="/profile" class="list-group-item list-group-item-action bg-light">Profile</a>
+          </div>
+      </div>
+      <!-- /#sidebar-wrapper -->
+    {% endblock%}
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <a href="#" id="menu-toggle" style="color: #AAA;">
+          <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-list-nested" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M4.5 11.5A.5.5 0 0 1 5 11h10a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 1 3h10a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5z"/>
+          </svg>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ current_user.first_name}}
+
+                {{ current_user.last_name}}
+              </a>
+
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/logout">Logout</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      {% block dashboard_content %}{% endblock %}
+    </div>
+    <!-- /#page-content-wrapper -->
+  </div>
+  <!-- /#wrapper -->
+
+
+
+  <!-- Bootstrap core JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+</body>
+</html>
+
+
