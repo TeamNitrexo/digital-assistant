@@ -15,7 +15,7 @@ from global_modules.data import no_user_found
 
 ### FLASK DEPENDENCIES ###
 from flask import Flask, render_template, session, jsonify, request, send_file, redirect, url_for, send_from_directory, flash
-from flask_mail import Mail, Message
+from flask_mail import Mail
 
 
 ### MONGO DATABASE MODELS ###
@@ -103,159 +103,10 @@ def index():
 
 
 
-# EMAIL CONVERSATIONS
-@app.route('/conversations/delete/<id>', methods = ['GET'])
-def delete_conversations(id):
-    if not 'username' in session:
-        return redirect(url_for('login'))
-
-    current_user = models.Users.objects.get(user_email = session['username'])
-
-    if current_user.user_type == "Admin":
-        conversation = models.Conversations.objects.get(id = id)
-
-        conversation.delete()
-
-        return redirect(request.referrer)
-    else:
-        return redirect(url_for('index'))
-
-
-@app.route('/conversations', methods = ['GET'])
-def conversations():
-    if not 'username' in session:
-        return redirect(url_for('login'))
-
-    current_user = models.Users.objects.get(user_email = session['username'])
-
-    if current_user.user_type == "Admin":
-        page = request.args.get('page')
-
-        if page:
-            try:
-                page_nb = int(page)
-            except:
-                page_nb = 0
-
-            if page_nb < 1:
-                page_nb = 1
-        else:
-            page_nb = 1
-
-        items_per_page = 10 
-        offset = (page_nb - 1) * items_per_page
-
-        conversation_count = models.Conversations.objects.count()
-
-        if offset > conversation_count:
-            offset = conversation_count // items_per_page
-        
-        if (offset + items_per_page) > conversation_count:
-            next_page = None
-        else:
-            next_page = (offset // items_per_page) + 2
-
-        if offset == 0:
-            previous_page = None
-        else:
-            previous_page = (offset // items_per_page)
-
-
-        conversations = models.Conversations.objects.order_by('-id')
-
-        return render_template(
-            "conversations.html", 
-            conversations = conversations,
-            current_user = current_user,
-            next_page = next_page, 
-            previous_page = previous_page,
-            page_nb = page_nb
-        )
-    elif current_user.user_type == "User":
-        page = request.args.get('page')
-
-        if page:
-            try:
-                page_nb = int(page)
-            except:
-                page_nb = 0
-            if page_nb < 1:
-                page_nb = 1
-        else:
-            page_nb = 1
-
-        items_per_page = 10 
-        offset = (page_nb - 1) * items_per_page
-
-        conversation_count = models.Conversations.objects(sender_email=session['username']).count()
-
-        if offset > conversation_count:
-            offset = conversation_count // items_per_page
-
-        if (offset + items_per_page) > conversation_count:
-            next_page = None
-        else:
-            next_page = (offset // items_per_page) + 2
-
-        if offset == 0:
-            previous_page = None
-        else:
-            previous_page = (offset // items_per_page)
-
-
-        conversations = models.Conversations.objects(sender_email=session['username']).order_by('-id')
-
-        return render_template(
-            "conversations.html",
-            conversations = conversations,
-            current_user = current_user,
-            next_page = next_page,
-            previous_page = previous_page,
-            page_nb = page_nb
-        )
-
-
-@app.route('/sendemail', methods = ['POST'])
-def sendemail():
-    if not 'username' in session:
-        return redirect(url_for('login'))
-
-    current_user = models.Users.objects.get(user_email = session['username'])
-
-    try:
-        content = request.get_json(silent=True)
-
-        email = render_template(
-            "email.html",
-            current_user = current_user,
-            message = content['message']
-        )
-
-        msg = Message(
-            "New Message",
-            sender=("Nitrexo Chatbot", "info@nitrexo.com"),
-            recipients=["info@nitrexo.com"]
-        )
-        msg.html = email
-        mail.send(msg)
-
-        conversation = models.Conversations(
-            message = content['message'],
-            sender_email = session['username']
-        )
-        conversation.save()
-
-        return {"status": "Success"}
-    except:
-        return {"status": "Error"}
-
-
-
 # ACCOUNT LOGIN/LOGOUT
 @app.route('/logout')
 @login_required
 def logout():
-    print('test')
     session.clear()
 
     return redirect(url_for('login'))
