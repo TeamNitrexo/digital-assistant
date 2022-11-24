@@ -7,5 +7,6 @@ mongo
 flask/tmr
 flask/uploads
 flask/Dockerfile
+flask/ignore
 OLD_NITREXO_CODE
 nitrexo-rasa
