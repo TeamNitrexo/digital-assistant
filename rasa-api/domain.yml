@@ -1,0 +1,372 @@
+version: "2.0"
+
+intents:
+  - greet
+  - bot_challenge
+  - inform
+  - thankyou
+  - out_of_scope
+  - affirm
+  - deny
+  - tev
+  - tmr
+  - goodbye
+
+responses:
+  utter_default:
+  - text: "I'm sorry, I did not understand the question. Could you please rephrase the Question?"
+  utter_fallback_rephrase:
+  - text: "I'm sorry, I did not understand the question. Could you please rephrase the Question?"
+  utter_iamabot:
+  - text: "I am a bot, powered by Rasa."
+  utter_goodbye:
+  - text: "Good bye. :)"
+
+  ## TEV Responses ##
+  utter_tev/question_1:
+  - text: "The Coefficient of Thermal Expension (CTE) describe how the size (volume) of an object evolves with a change of temperature. Its unit is 1/Kelvin."
+  utter_tev/question_2:
+  - text: "According to the ECSS - the Verification and Validation (V&V) process is to build confidence in the predictive capability of computanional model. Verification is the process of determining that a computational model accurately represents the underlying mathematical model and its solution. Validation is the process of determining the degree to which a model is an accurate representation of the real world from the perspective of the intended uses of the model."
+  utter_tev/question_4:
+  - text: "The usual inputs for a thermo-elastic analysis are : Geometrical Mathematical Model (GMM) for radiative calculations - Thermal Mathematical Model (TMM) for temperature computation - Structural Finite Element Model (FEM) adapted for thermo-elastic analysis."
+  utter_tev/question_5:
+  - text: "Thermal loads may be defined as the internal loads in a structure caused by the expansion or the contraction (or both) of certain structural elements when being exposed to a temperature field which deviates from the one where the same structure is stress free (in general the temperature at which the structure parts have been assembled, usually being the room temperature)."
+  utter_tev/question_6:
+  - text: "The Thermo-Elastic Distorsions are governed by the following equation : u0394L=u237A*u0394T*l, which l represent the original length of the structural element, u0394L is the change in length of the structural element, u237A is the Coefficient of Thermal Expension (CTE) and u0394 T is the applied temperature change."
+  utter_tev/question_7:
+  - text: "Albedo is : solar heat fluxes that are reflected by the surface of the Planet."
+  utter_tev/question_8:
+  - text: "According to the ECSS - The Temperature Mean Deviation is sum of temperature differences (measured minus analysed values) divided by the number of correlated temperatures, it could be calculate with the following equation: u0394 Tmean = (1/N)*SUM(Tmi-Tpi) from 1 to N, where: u0394Tmean is the temperature mean deviation, Tmi is the measured temperature, Tpi is the temperature predicted by analysis and N is the number of samples. "
+  utter_tev/question_9:
+  - text: "According to the ECSS - The Temperature Standard Deviation is the measure of statistical dispersion of temperature deviations, measuring how widely spread the values of temperature differences in a data set are. "
+  utter_tev/question_10:
+  - text: "SINAS is a software tool provided by ESA for mapping thermal nodes temperature onto a Finite Element mesh. It used the Prescribed Average Temperature (PAT) method for carry out the temperature mapping."
+  utter_tev/question_11:
+  - text: "MSC NASTRAN is a software using the Finite Elements methods allowing to simulate the behaviour of an item or a system. It is widely used in the engineer community."
+  utter_tev/question_12:
+  - text: "A robust system is a system which have low sensitivity to uncertainties in input parameters."
+  utter_tev/question_13:
+  - text: "Radio Frequency (RF) represent an electromagnetic wave between 20kHz to 300GHz."
+  utter_tev/question_14:
+  - text: "Root Mean Square (RMS) is the square root of the arithmetic mean of the squares of a set of numbers."
+  utter_tev/question_15:
+  - text: "I/F is the acronym for Interface (e.g.interface between two thermal components)."
+  utter_tev/question_16:
+  - text: "The Primary Convergence Criteria refers to the Maximum temperature change for each node between two successive iterations of the permanent solver."
+  utter_tev/question_17:
+  - text: "Radiative cavities (also called Radiative enclosure) are a set of surfaces that cannot exchange heat by thermal radiation with the surfaces of another cavity."
+  utter_tev/question_18:
+  - text: "Radiative enclosure (also called Radiative cavities) are a set of surfaces that cannot exchange heat by thermal radiation with the surfaces of another cavity."
+  utter_tev/question_19:
+  - text: "Carbon Fiber Reinforced Plastic (CFRP) is a material widely used in the aerospace industry."
+  utter_tev/question_20:
+  - text: "TA6V is a titanium alloy widely use in the worldwide industry."
+  utter_tev/question_21:
+  - text: "The Centre-Point Prescribed Temperature (CPPT) is a method aiming to carried out the Temperature Mapping."
+  utter_tev/question_22:
+  - text: "SINAS used the Prescribed Average Temperature (PAT) method for carry out the temperature mapping."
+  utter_tev/question_23:
+  - text: "The Prescribed Average Temperature (PAT) is a method allowing to perform the Temperature Mapping. It is the method used by the software tool SINAS. This method is characterised as follow: the temperature of the thermal nodes is the average temperature of the material or the volume of the same nodes."
+  utter_tev/question_24:
+  - text: "There are mainly four methods to carry out the temperature mapping: the Geometric interpolation Method, the Centre-Point Prescribed Temperature (CPPT) method, the Patch-Wise Temperature Application method and the Prescribed Average Temperature (PAT) method."
+  utter_tev/question_25:
+  - text: "According to the ECSS - The Thermal Balance Test (TBT) is a test conducted to verify the adequacy of the thermal model and the adequacy of the thermal design."
+  utter_tev/question_26:
+  - text: "A thermocouple is an instrument used for temperature measurement. It is particularly widely used in the measurement of the TRP."
+  utter_tev/question_27:
+  - text: "The cyclic convergence is used for orbit analysis. The software will compute the temperature of each orbital position (independently from each other) of an orbit without consider the convergence criteria at first. Then start again with the same orbit but with considering the convergence criteria by compare the result of the fist orbit and the second one. The link between the two successive orbital positions is, for a transient analysis, the temperatures calculation of the next orbital position is initialised with the temperature results of the previous orbital position. There are two types of criteria: a steady state and transient criteria. the steady state occurs only within the full orbit, not between each orbital position. But then, you have also a convergence criteria for the transient analysis, i.e. within the transient analysis, so the temperature calculation occurs at_each iteration, you have several iterations within each time step, and you have several time steps within each orbital position. So, the temperature calculation during the transient for each iteration_needs to converge, so when the temperature at each iteration has converged, according to the convergence_criteria defined within the transient solver itself, then the temperature of the time step has been calculated so it then calculates the temperature of the next time step by doing the same process, i.e. calculating the temperatures at each iteration, etc."
+  utter_tev/question_28:
+  - text: "Multi-Point Constraints (MPC) is a method allowing to connect the nodes of the FE model using linear constraints. This method is mainly used to simulate boundary conditions, when the basics ones do not represent the true behaviour."
+  utter_tev/question_29:
+  - text: "According to the ECSS - Temperature gradient is a spatial derivation of temperature in a point at a given time."
+  utter_tev/question_30:
+  - text: "There are three categories of external radiative exchange: solar flux, Infrared (IR), Albedo."
+  utter_tev/question_31:
+  - text: "According to the ECSS - Heat flux is a thermal energy (heat) divided by time and unit area perpendicular to the flow path."
+  utter_tev/question_32:
+  - text: "The Rayleigh Number is a dimensionless number that characterises the heat transfer within a fluid."
+  utter_tev/question_33:
+  - text: "The discretization is the transition from a continuous state to a discrete state. This allows us to digitally solve most of the problems governing our systems."
+  utter_tev/question_34:
+  - text: "According to the ECSS - correlation is the correspondence between analytical predictions and test results."
+  utter_tev/question_35:
+  - text: "The Temperature Mapping (also called Thermal Mapping) is an exchange of data between the Thermal Mathematical Model (TMM) and the Finite Elements model (FEM). The temperature results of the TMM will be used as input heat load to the FEM to carry out the thermo-elastic analysis."
+  utter_tev/question_36:
+  - text: "The Thermal Mapping (also called Temperature Mapping) is an exchange of data between the Thermal Mathematical Model (TMM) and the Finite Elements model (FEM). The temperature results of the TMM will be used as input heat load to the FEM to carry out the thermo-elastic analysis."
+  utter_tev/question_37:
+  - text: "A transient mode, (or transient analysis) is a case where our system has not reached its so-called established or permanent state, i.e. where it has not converged towards its final solution."
+  utter_tev/question_38:
+  - text: "According to the ECSS - Heat link is an unwanted heat exchange between a thermally protected item and the environment. It could be a gain or a loss."
+  utter_tev/question_39:
+  - text: "According to the ECSS - Heat dissipation is a thermal energy divided by time produced by a source."
+  utter_tev/question_40:
+  - text: "According to the ECSS - Heat lift is a transfer of a specified heat flow rate from a lower to a higher temperature (e.g. heat pump)."
+  utter_tev/question_41:
+  - text: "According to the ECSS - Temperature stability is a condition when the temperature variation for a defined period of time is less than a defined (small) value."
+  utter_tev/question_42:
+  - text: "According to the ECSS - Temperature uniformity is a condition when the temperature difference or the temperature gradient at a given time is less than a defined (small) value."
+  utter_tev/question_43:
+  - text: "According to the ECSS - Temperature variation is a change of temperature at a given point with respect to time (expressed by a temperature divided by a time)."
+  utter_tev/question_44:
+  - text: "According to the ECSS - a Thermal Protection Subsystem (TPS) is a thermal control system to protect the spacecraft against aerodynamic heating (e.g. ablative materials, ceramic tile and shingle, internal insulation, etc...)."
+  utter_tev/question_45:
+  - text: "The Coefficient of Moisture Expension (CME) is defined by the ratio of the length variation to the mass variation due to moisture absorption or release, expressed in %. It is used when the performance of the mission require hygro-elastic analyses."
+  utter_tev/question_46:
+  - text: "A semi-grey body is a body with surfaces whose thermo-optical properties are invariant with regard to wavelength in the solar and infrared spectrum."
+  utter_tev/question_47:
+  - text: "A round trip check is a conversion from the source model to the destination model, then repeat the operation in the opposite direction and check that the model is the same as at the start."
+  utter_tev/question_48:
+  - text: "IP is the acronym for In-Plane. It is used e.g. to talk about distorsions."
+  utter_tev/question_49:
+  - text: "OP is the acronym for Out-of-Plane. It is used e.g. to talk about distorsions."
+  utter_tev/question_50:
+  - text: "A singularity is a point in a discretised model where the solution is not or not completely defined (e.g. reentrant angle, discontinuous behaviour, etc.)."
+  utter_tev/question_51:
+  - text: "The Von Mises stress criterion is a plasticity criterion used in the study of materials. It is used to determine the elasticity limit of the material according to the various stresses applied to it."
+  utter_tev/question_52:
+  - text: "A zero stress check allows to verify that the model to be used for the thermo-elastic analysis is well conditioned and suitable for thermo-elastic analysis. This check verifies that no residual stresses occur for the following specific model characteristics:"
+  utter_tev/question_53:
+  - text: "The eigenfrequency of a system is the frequency at which the system oscillates when it is in free motion, i.e. without external excitation or dissipative forces."
+  utter_tev/question_54:
+  - text: "Several tools are used to verify the models accuracy for thermo-elastic analyses: - Zero-stress check - Tests - Verification analysis - Correlation success criteria"
+  utter_tev/question_55:
+  - text: "Guidelines were created for specific elements : - bolted element - struts - washers - bimetallic areas"
+  utter_tev/question_56:
+  - text: "Here is the guideline to model bolted elements: a. Model the washer in 3D with an explicit modelling.b. Represent the bolts by beam elements to have the variation of the preload with temperature. c. Beam modelling of the bolt starts below the bolt head to the level of the nut. RBE3 elements should be used to model the 3D bolt-washer interface."
+  utter_tev/question_57:
+  - text: "Here is the guideline to model glued elements: a. 3D modelling of the glue joint b. Use CHENXA and CPENTA finite elements c. One element in the glue thickness is enough d. Take into account manufacturing tolerances and therefore model the glue joint with its maximum thickness."
+  utter_tev/question_58:
+  - text: "Here is the guideline to model bimetallic elements:a. Structured meshing with CHEXA and CPENTA elements, with a minimum of two elements in each metal thickness. b. Use a xAB merged xBB interface between the two metallic parts"
+  utter_tev/question_59:
+  - text: "According to te ECSS, here is the guideline to model electronics units : - the key to achieving good accuracy in the modelling of electronic units is the careful selection of the conductance values in the discontinuities. - a PCB is a classic example of a layered material. "
+  utter_tev/question_60:
+  - text: "According to te ECSS, here is the guideline to model heat pipes: - Normally only the wall of the heat pipe is discretised in the axial direction. If an especially detailed model is required then circumferential discretisation, or the modelling of the heat pipe flanges, can be considered.- The vapour inside the heat pipe is modelled by a single arithmetic node. The inside of the heat pipe wall/wick is thermal linked to the vapour node via appropriate boiling/condensation Heat Transfer Coefficients (HTC)."
+  utter_tev/question_61:
+  - text: "Modelling surfaces with struts: a. To predict the axial displacement, build a detailed model of the strut b. Build a 1D model of this strut c. Correlate the 1D model to the detailed one"
+
+  ## TMR Responses ##
+  utter_tmr/question_1:
+  - text: "Validation is the process of determining the degree to which a computational model is an accurate representation of the real world from the perspective of the intended uses of the model."
+  utter_tmr/question_2:
+  - text: "Test is the process of validating."
+  utter_tmr/question_3:
+  - text: "Verification is the process of determining that a computational model accurately represents the underlying mathematical model and its solution."
+  utter_tmr/question_4:
+  - text: "Geometrical Mathemathical Model is a mathematical model in which an item and its surroundings are represented by radiation exchanging surfaces characterised by their thermo-optical properties."
+  utter_tmr/question_5:
+  - text: "Thermal Mathematical Model is a numerical representation of an item and its surroundings represented by concentrated thermal capacitance nodes or elements coupled by a network made of thermal conductors like radiative conductive and convective."
+  utter_tmr/question_6:
+  - text: "Reduced Geometrical Mathematical Model"
+  utter_tmr/question_7:
+  - text: "Reduced Thermal Mathematical Model"
+  utter_tmr/question_8:
+  - text: "Detailed Geometrical Mathematical Model"
+  utter_tmr/question_9:
+  - text: "Detailed Thermal Mathematical Model"
+  utter_tmr/question_10:
+  - text: "Representation of a specific volume of an item with a representative temperature, representative material properties, and representative pressure like diffusion node used in a mathematical lumped parameter approach."
+  utter_tmr/question_11:
+  - text: "Uncertainities are inaccuracies in temperature calculations due to inaccurate physical - environmental and modelling parameters."
+  utter_tmr/question_12:
+  - text: "Arithmetic thermal node are thermal nodes with zero thermal capacitance."
+  utter_tmr/question_13:
+  - text: "Computational model is a numerical implementation of a mathematical model."
+  utter_tmr/question_14:
+  - text: "Ratio of capacitance to sum of connected conductances for a thermal node."
+  utter_tmr/question_15:
+  - text: "Key Model Output is output from the thermal model having high level of importance."
+  utter_tmr/question_16:
+  - text: "Radiative cavity is the collection of radiative surfaces of the thermal-radiative model - having the property that its surfaces cannot exchange heat through thermal radiation with the surfaces belonging to another cavity."
+  utter_tmr/question_17:
+  - text: "Collection of radiative surfaces of the thermal-radiative model - having the property that its surfaces cannot exchange heat through thermal radiation with the surfaces belonging to another cavity."
+  utter_tmr/question_18:
+  - text: "Beginning-Of-Life"
+  utter_tmr/question_19:
+  - text: "Constant Conductance Heat Pipe. Standard heat pipes also known as Constant Conductance Heat Pipes (CCHPs) in Spacecraft Thermal Control. Heat transfer to the evaporator vaporizes liquid within the wick. Vapor pressure drives fluid to the condenser. Heat transfer from the condenser condenses vapor at the wick."
+  utter_tmr/question_20:
+  - text: "Computational fluid dynamics is a branch of fluid mechanics that uses numerical analysis and data structures to analyze and solve problems that involve fluid flows."
+  utter_tmr/question_21:
+  - text: "Coupled Launcher Analysis. An important step in the design and verification process of spacecraft structures is the coupled dynamic analysis with the launch vehicle - also referred to as coupled loads analysis."
+  utter_tmr/question_22:
+  - text: "Centre National dEtudes Spatiales"
+  utter_tmr/question_23:
+  - text: "Commercial Off-The-Shelf or commercially available off-the-shelf products are packaged solutions which are then adapted to satisfy the needs of the purchasing organization - rather than the commissioning of custom-made - or bespoke - solutions."
+  utter_tmr/question_24:
+  - text: "Document Requirements Definition. Requirements Documentation. Requirements documentation in project management describes how each requirement meets the business needs for the project. Requirements should be measurable - traceable - consistent - complete and acceptable to the stakeholders."
+  utter_tmr/question_25:
+  - text: "Requirements Documentation. Requirements documentation in project management describes how each requirement meets the business needs for the project. Requirements should be measurable"
+  utter_tmr/question_26:
+  - text: "European Cooperation for Space standsardization.The European Cooperation for Space standsardization is an initiative established to develop a coherent - single set of user-friendly standsards for use in all European space activities."
+  utter_tmr/question_27:
+  - text: "Electrical - Electronic and Electromechanical"
+  utter_tmr/question_28:
+  - text: "End-Of-Life"
+  utter_tmr/question_29:
+  - text: "Thermal/fluid analyser from ITP Aero. ESATAN-TMS provides a high-productivity and powerful thermal modelling environment - supporting the complete thermal analysis process from geometry creation - radiative and thermal analysis - and post-processing of the thermal results."
+  utter_tmr/question_30:
+  - text: "The Finite Element Method is the most widely used method for solving problems of engineering and mathematical models. Typical problem areas of interest include the traditional fields of structural analysis - heat transfer - fluid flow - mass transport - and electromagnetic potential."
+  utter_tmr/question_31:
+  - text: "A Heat Pipe is a heat-transfer device that combines the principles of both thermal conductivity and phase transition to effectively transfer heat between two solid interfaces."
+  utter_tmr/question_32:
+  - text: "The Heat Transfer Coefficient is the heat transferred per unit area per kelvin. Thus area is included in the equation as it represents the area over which the transfer of heat takes place. The areas for each flow will be different as they represent the contact area for each fluid side."
+  utter_tmr/question_33:
+  - text: "Input / Output. In computing - input/output or I/O is the communication between an information processing system - such as a computer and the outside world - possibly a human or another information processing system. Inputs are the signals or data received by the system and outputs are the signals or data sent from it."
+  utter_tmr/question_34:
+  - text: "An Interface Control Document in systems engineering and software engineering - provides a record of all interface information generated for a project. The underlying interface documents provide the details and describe the interface or interfaces between subsystems or to a system or subsystem."
+  utter_tmr/question_35:
+  - text: "International Conference on Environmental Systems"
+  utter_tmr/question_36:
+  - text: "Infrared - sometimes called infrared light - is electromagnetic radiation with wavelengths longer than those of visible light. It is therefore generally invisible to the human eye - although IR at wavelengths up to 1050 nanometers s from specially pulsed lasers can be seen by humans under certain conditions."
+  utter_tmr/question_37:
+  - text: "A Loop Heat Pipe is a two-phase heat transfer device that uses capillary action to remove heat from a source and passively move it to a condenser or radiator. LHPs are similar to heat pipes but have the advantage of being able to provide reliable operation over long distance and the ability to operate against gravity."
+  utter_tmr/question_38:
+  - text: "Lumped Parameter. The lumped-element model simplifies the description of the behaviour of spatially distributed physical systems into a topology consisting of discrete entities that approximate the behaviour of the distributed system under certain assumptions."
+  utter_tmr/question_39:
+  - text: "Monte Carlo Ray-Tracing. The Monte Carlo Ray-Tracing method is based on the statistically predictable behavior of entities - called rays - which describe the paths followed by energy bundles as they are emitted - reflected - scattered - refracted - diffracted and ultimately absorbed."
+  utter_tmr/question_40:
+  - text: "The Monte Carlo Ray-Tracing method is based on the statistically predictable behavior of entities"
+  utter_tmr/question_41:
+  - text: "Multi-layer insulation (MLI) is thermal insulation composed of multiple layers of thin sheets and is often used on spacecraft. It is one of the main items of the spacecraft thermal design - primarily intended to reduce heat loss by thermal radiation."
+  utter_tmr/question_42:
+  - text: "Open Source products include permission to use the source code - design documents - or content of the product."
+  utter_tmr/question_43:
+  - text: "A Printed Circuit Board mechanically supports and electrically connects electrical or electronic components using conductive tracks - pads and other features etched from one or more sheet layers of copper laminated onto and/or between sheet layers of a non-conductive substrate."
+  utter_tmr/question_44:
+  - text: "Proportional Integral Derivative (PID) Control. Proportional Integral Derivative (PID) control automatically adjusts a control output based on the difference between a set point (SP) and a measured process variable (PV). The value of the controller output u(t) is transferred as the system input."
+  utter_tmr/question_45:
+  - text: "Proportional Integral Derivative (PID) control automatically adjusts a control output based on the difference between a set point (SP) and a measured process variable (PV). The value of the controller output u(t) is transferred as the system input."
+  utter_tmr/question_46:
+  - text: "Product Lifecycle Management. In industry - product lifecycle management is the process of managing the entire lifecycle of a product from inception - through engineering design and manufacture - to service and disposal of manufactured products."
+  utter_tmr/question_47:
+  - text: "Radiation Exchange Factor. Fraction of the total energy emitted by surface i that is absorbed by surface j either directly or after any number or type of reflections and/or transmission. REF(i, j) = Fij.ei.aj where Fij view factor of node j from node i, ei emissivity of node i and aj absorptivity of j."
+  utter_tmr/question_48:
+  - text: "Fraction of the total energy emitted by surface i that is absorbed by surface j either directly or after any number or type of reflections and/or transmission. REF(i - j) = Fij.ei.aj where Fij view factor of node j from node i - ei emissivity of node i and aj absorptivity of j."
+  utter_tmr/question_49:
+  - text: "A spacecraft is a vehicle or machine designed to fly in outer space. A type of artificial satellite - spacecraft are used for a variety of purposes - including communications - Earth observation - meteorology - navigation - space colonization - planetary exploration - and transportation of humans and cargo."
+  utter_tmr/question_50:
+  - text: "Simulation Data Management. Simulation Data Management is a technology which uses database solutions to enable users to manage structures of simulation and process data across the complete product lifecycle. SDM artifacts can be data - models - processes - documents and metadata relevant to modeling - simulation - and analysis."
+  utter_tmr/question_51:
+  - text: "SINDA is a thermal analyzer that has been extensively used in a wide range of successful space programs including Astra - ERS 1-2 - Gomos - Mars Express - Silex - Soho - and across multiple industries including Aerospace - Automotive - and Electronics."
+  utter_tmr/question_52:
+  - text: "Singular Value Decomposition. In linear algebra - the Singular Value Decomposition is a factorization of a real or complex matrix that generalizes the eigendecomposition of a square normal matrix to any matrix via an extension of the polar decomposition."
+  utter_tmr/question_53:
+  - text: "Thermal Balance. Thermal Balance occurs when the sum of all the different types of heat flow into and out of a system is zero. That is - the system is losing as much heat as it gains so it can be said to be in equilibrium."
+  utter_tmr/question_54:
+  - text: "Thermal Control System. Thermal Control Systems are an integral part of all spacecraft and instruments - maintaining the temperature within a range required to function properly. MEMS-based thermal control devices are louvers - thermal switches - thermostat switches - heat pipes and - potentially - Stirling coolers or micropumps in the future."
+  utter_tmr/question_55:
+  - text: "Thermal/fluid analyser from MAYA HTT Engineering Software Solutions. TMG Thermal Analysis is a comprehensive heat transfer simulation module. You can use TMG to model heat transfer by conduction - convection - radiation - fluid flow - and phase change. Thermal models are solved using advanced finite control volume technology - under steady-state or transient loading conditions."
+  utter_tmr/question_56:
+  - text: "Thermal Model Reduction Tool. Thermal Model Reduction Tool is focused on the reduction of the number of nodes of an initial Detailed Thermal Mathematical Model (nodal model) by generating a final Reduced Thermal Mathematical Model."
+  utter_tmr/question_57:
+  - text: "Thermal Model Reduction Tool is focused on the reduction of the number of nodes of an initial Detailed Thermal Mathematical Model (nodal model) by generating a final Reduced Thermal Mathematical Model."
+  utter_tmr/question_58:
+  - text: "Technology Readiness Level. Technology Readiness Levels are a method for estimating the maturity of technologies during the acquisition phase of a program."
+  utter_tmr/question_59:
+  - text: "Technology readiness levels are a method for estimating the maturity of technologies during the acquisition phase of a program."
+  utter_tmr/question_60:
+  - text: "Temperature Reference Point. Physical point located on a unit and defined in the unit ICD to provide a simplified representation of the unit temperatureposition of the thermocouple."
+  utter_tmr/question_61:
+  - text: Physical point located on a unit and defined in the unit ICD to provide a simplified representation of the unit temperatureposition of the thermocouple. "
+  utter_tmr/question_62:
+  - text: "Verification and Validation"
+  utter_tmr/question_63:
+  - text: "Variable Conductance Heat Pipes (VCHPs) are similar to standsard heat pipes - with the addition of a Non-Condensable Gas (NCG). When heat is supplied to the evaporator - the working fluid vaporizes - and travels to the condenser - where it condenses."
+  utter_tmr/question_64:
+  - text: "Thermal technical requirements are tight - so dense meshes are necessary."
+  utter_tmr/question_65:
+  - text: "For a Given high order TMM - to find a low-order TMM such that the low-order TMM retains - or closely approximates - the input-output behaviour of the high order TMM - to reduce run time - and to reduce storage needs (I/O files) and memory."
+  utter_tmr/question_66:
+  - text: "Manual classical approach - Automatic classical approach - Mode superposition methods - Krylov subspace methods - Balance truncation realization (BTR) method - Trajectory piecewise linear approach (TPWL) - Proper orthogonal decomposition (POD) - Automated thermal model reduction for telecom S/C walls inspired by the Guyan static. condensation method - Thermal model automatic reduction: algorithm and validation techniques - Thermal Model Reduction Tool (TMRT) - COMSTAP (developed by the Korean Space Research Institute) - Static condensation - Perturbation techniques and Bubnov-Galerkin method - Stochastic optimization method and PANAMA software - Polygon reduction techniques for the geometry reduction - Latin Hypercube sampling and Gaussian - Process regression modelling - Model reduction for FEM thermal models."
+  utter_tmr/question_67:
+  - text: "Automatic classical method"
+  utter_tmr/question_69:
+  - text: "Use the automatic classical approach."
+  utter_tmr/question_70:
+  - text: "It is the automatic process of the manual classical approach for spacecraft thermal model reduction."
+  utter_tmr/question_71:
+  - text: "It keeps the topological properties of the Thermal Mathematical Model (symmetric conductive and radiative couplings matrices - with non-negative elements) - the Reduced Geometrical Mathematical Model can be integrated into another thermal model - it is very efficient computationally - it provides a priori error bound
+    - it has good performance - it has been tested on realistic thermal models - it is a logic and human-like approach."
+  utter_tmr/question_72:
+  - text: "Reduction Ratio (rr) is a measure of the reduction degree. rr ranges from 0 to 1 - 0 indicates that the reduced and the detailed models are the same - whereas 1 represents complete reduction - as only the boundary nodes remain in the reduced model. Ideally rr = 1 represents the upper limit of the reduction ratio."
+  utter_tmr/question_73:
+  - text: "Between 0.75-0.80"
+  utter_tmr/question_74:
+  - text: "Identification of responsibility for reduction tasks - specification of model reduction correlation success criteria (ECSS) - definition of specific modelling rules (e.g. - specific nodes numbering) and constraints (e.g. - number of nodes/number of surfaces/model size - interface nodes)."
+  utter_tmr/question_75:
+  - text: "Use the same boundary nodes for both the reduced and detailed models - additional boundary nodes within the Reduced Thermal Mathematical Model are forbidden - grouping of similar boundary nodes within the Reduced Thermal Mathematical Model can be accepted - but this is agreed with the customer and tracked - removal of boundary nodes within the Reduced Thermal Mathematical Model is strongly discouraged."
+  utter_tmr/question_76:
+  - text: "The imposed dissipation in the detailed and reduced models is equal for a given case."
+  utter_tmr/question_77:
+  - text: "For equivalent surfaces - the imposed heat fluxes on reduced model are equal to those applied to detailed model."
+  utter_tmr/question_78:
+  - text: "If the reduced model is run for transient analyses - consider the same detailed model heat capacitance on equivalent elements."
+  utter_tmr/question_79:
+  - text: "AA"
+  utter_tmr/question_80:
+  - text: "Kept Nodes are the detailed Thermal Mathematical Model nodes to be maintained for control and/or accuracy needs: interfaces - TRP - HP vapour nodes - temperature sensors locations - heated area - etc."
+  utter_tmr/question_81:
+  - text: "These are the nodes that have minor or no influence on thermal behaviour from the host Thermal Mathematical Model standspoint. Usually suppressed nodes do not involve radiative heat exchange."
+  utter_tmr/question_82:
+  - text: "Suppressed Nodes are the nodes that have minor or no influence on thermal behaviour from the host Thermal Mathematical Model standspoint. Usually suppressed nodes do not involve radiative heat exchange."
+  utter_tmr/question_83:
+  - text: "Grouped/Condensed Nodes. These are the nodes set to be replaced with one node each."
+  utter_tmr/question_84:
+  - text: "You create the Reduced Thermal Mathematical Model: you group and condense the nodes that can be considered at the same temperature (isothermal) with the same material properties part by part Then you create the Reduced Geometrical Mathematical Model: you alter the mesh of the Detailed Geometrical Mathematical Model to match with the group of thermal nodes that can be considered isothermal you redefine the geometries associated to the nodes of Detailed Geometrical Mathematical Model that are being merged into single nodes by altering them to larger surfaces or increasing the size of the meshes by preserving the same total area and using the coordinates of the existing shells of the groups of nodes of Detailed Geometrical Mathematical Model that are being merged into single nodes. The final goal should be to get the same GRs as obtained by the reduction process. You correlate the Reduced Thermal Mathematical Model with the Detailed Thermal Mathematical Model: you compare the nodal capacitance-weighted mean temperatures of the group of detailed thermal nodes that can be considered isothermal with the temperatures of their corresponding reduced thermal model nodes for the worst hot and cold steady state analysis cases. Compare the heat fluxes of groups of the detailed thermal model nodes that are being merged into single nodes with the reduced thermal model nodes for the worst hot and cold steady state analysis cases. If all the ECSS correlations criteria are met then the correlations are successful. If all the ECSS correlations criteria are not met identify the reduced thermal model nodes that failed to meet these criteria. Analyse the temperatures and heat fluxes differences between the reduced thermal models nodes and their corresponding detailed thermal model nodes groups that failed to meet these criteria. When performing a heat fluxes balance on the detailed thermal model nodes groups that fail to meet the correlations criteria if the conduction predominates over the radiation for those particular groups of nodes then calculate the optimised positive thermal conductive couplings for the reduced thermal model nodes needed to get the targeted mean temperatures (weighted by nodal capacitance) and heat fluxes of their corresponding groups of detailed thermal model nodes. If the radiation predominates over the conduction (high radiative couplings) for these particular groups of nodes especially the nodes of the external surfaces then perform the surface area-weighted mean thermo-optical properties needed to get the targeted mean temperatures (weighted by nodal capacitance) and heat fluxes of their corresponding groups of detailed thermal model nodes. Overlap the resulting nodal breakdown of the worst hot and cold steady state analysis cases of the reduced thermal models. For the transient analysis adjust and optimise the thermal capacitances of the reduced thermal nodes so their temperatures profiles over time match with the temperatures profiles of their corresponding detailed thermal model nodes groups over time."
+  utter_tmr/question_85:
+  - text: "You group and condense the nodes that can be considered at the same temperature (isothermal) - with the same material properties - part by part."
+  utter_tmr/question_86:
+  - text: "When detailed TMM temperature difference with reference to their mean value is between a specified accuracy. If the temperature difference of some nodes of the same part are lower or equal to 1uFFB0C - you can consider that those nodes are at the same temperature. "
+  utter_tmr/question_87:
+  - text: "Significant temperature gradients are likely to occur between different parts and not within the same part. For this reason - you should avoid to merge two nodes of two different parts."
+  utter_tmr/question_88:
+  - text: "You should analyse the temperature results of the worst hot and cold analysis cases."
+  utter_tmr/question_89:
+  - text: "The worst cold and hot analysis cases are the ones that cause the highest temperature gradients over the space system."
+  utter_tmr/question_90:
+  - text: "The solar absorptivity gets damaged at the end of the life of the spacecraft - so its value increases with time. At very high temperature - according to the Plancku2019s law - the emissivity is highly dependent on the wavelength. The maximum sum of heat loads - The equipment operating mode. The beta angle is the angle between the orbit normal and sun vector. The solar constant and solar declination vary with seasons. The maximum external heat fluxes. The moving components."
+  utter_tmr/question_91:
+  - text: "The value of solar absorptivity is smaller at the beginning of the life of the spacecraft as it gets damaged with time. At very cold temperature - according to the Plancku2019s law - the emissivity is highly dependent on the wavelength. The minimum sum of heat loads. The equipment operating mode. The maximum shadow time occurs when the sun vector lies in the satelliteu2019 s orbit plane. The solar constant and solar declination vary with seasons. The minimum external heat fluxes (eclipse - etc.). The moving components and the configuration of spacecraft."
+  utter_tmr/question_92:
+  - text: "Both steady and transient states should be used for creating the Reduced Thermal Mathematical Model."
+  utter_tmr/question_93:
+  - text: "You assign a different node number for each group of thermal nodes that are being condensed - you sum up the capacitances of the thermal nodes that can be considered isothermal to the group of thermal nodes that are being condensed
+    - you sum up the heat loads of the thermal nodes that can be considered isothermal to the group of thermal nodes that are being condensed - you assign the linear and radiative conductors to the group of thermal nodes that are being condensed."
+  utter_tmr/question_94:
+  - text: "All the conductors between the thermal nodes that can be considered isothermal and themselves are not kept in the RTMM. All the conductors between the groups of thermal nodes that can be considered isothermal and the other groups of thermal nodes that can be considered isothermal are kept and assigned between them in the RTMM depending on the fact that the thermal resistances are in uFF93seriesuFF94 or uFF93paralleluFF94. Conductor = 1/thermal resistance. If the thermal resistances are in uFF93seriesuFF94 - the resultant conductor for the combination would be: conductor (combination) = (1/conductor 1) + (1/conductor 2) + etc. - If the thermal resistances are in u201Cparallelu201D - the resultant conductor for the combination would be: conductor (combination) = conductor 1 + conductor 2 + etc."
+  utter_tmr/question_95:
+  - text: "You avoid grouping nodes with different optical properties when radiative heat transfer is relevant."
+  utter_tmr/question_96:
+  - text: "You alter the mesh of the Detailed Geometrical Mathematical Model to match with the group of thermal nodes that can be considered isothermal. You redefine the geometries associated to the nodes of Detailed Geometrical Mathematical Model that are being merged into single nodes by altering them to larger surfaces or increasing the size of the meshes - by preserving the same total area - and using the coordinates of the existing shells of the groups of nodes of Detailed Geometrical Mathematical Model that are being merged into single nodes. The final goal should be to get the same GRs as obtained by the reduction process."
+  utter_tmr/question_97:
+  - text: "Check the maximum REF line sum error and make sure that it is almost equal to 0. Check the maximum view vector to the Inactive node. Change the value of the seed and perform the radiative case again."
+  utter_tmr/question_98:
+  - text: "It is the energy conservation forREFs.In other terms - the total sum of REFs should be equal to 1 according to the conservation energy law. Thus - the REF line sum error - which is_equal to_the total sum of REFs (equal to 1)_minus_the sum of REFs calculated_in the thermal model should be equal to 0._If not - it_probably means_that you have duplicate_ or overlapped_surfaces_in your thermal model_or_not have fired enough rays from some surfaces._"
+  utter_tmr/question_99:
+  - text: "It is the status of activity of surface or node. In other terms - it means that all the rays hitting u201CInactiveu201D surfaces will be lost so the energy of these rays will be lost_through the u201CInactiveu201D surfaces. In the case of a node - it means that the u201CInactiveu201D nodes wonu2019 t take part of the thermal analysis.__"
+  utter_tmr/question_100:
+  - text: "It gives you an idea of how much of energy of your system is lost through the Inactive surfaces."
+  utter_tmr/question_101:
+  - text: "It is the source where the rays are fired."
+  utter_tmr/question_102:
+  - text: "You compare the nodal capacitance-weighted mean temperatures of the group of detailed thermal nodes that can be considered isothermal with the temperatures of their corresponding reduced thermal model nodes for the worst hot and cold steady state analysis cases. Compare the heat fluxes of groups of the detailed thermal model nodes that are being merged into single nodes with the reduced thermal model nodes for the worst hot and cold steady state analysis cases. If all the ECSS correlations criteria are met - then the correlations are successful. If all the ECSS correlations criteria are not met - identify the reduced thermal model nodes that failed to meet these criteria. Analyse the temperatures and heat fluxes differences between the reduced thermal models nodes and their corresponding detailed thermal model nodes groups that failed to meet these criteria. When performing a heat fluxes balance on the detailed thermal model - nodes groups that fail to meet the correlations criteria - if the conduction predominates over the radiation for those particular groups of nodes - then calculate the optimised positive thermal conductive couplings for the reduced thermal model nodes needed to get the targeted mean temperatures (weighted by nodal capacitance) and heat fluxes of their corresponding groups of detailed thermal model nodes. If the radiation predominates over the conduction (high radiative couplings) for these particular groups of nodes - especially the nodes of the external surfaces - then perform the surface area-weighted mean thermo-optical properties - needed to get the targeted mean temperatures (weighted by nodal capacitance) and heat fluxes of their corresponding groups of detailed thermal model nodes. Overlap the resulting nodal breakdown of the worst hot and cold steady state analysis cases of the reduced thermal models. For the transient analysis - adjust and optimise the thermal capacitances of the reduced thermal nodes - so their temperatures profiles over time match with the temperatureu2019s profiles of their corresponding detailed thermal model nodes groups over time. "
+  utter_tmr/question_103:
+  - text: "Correlation for units is based on each TRP as defined in the ICD."
+  utter_tmr/question_104:
+  - text: "Corruption - or even loss - of electronic data. Incomplete or incorrect deliveries meaning that the model cannot be executed (e.g. missing files). Incomplete or inadequate documentation describing the model and how to execute it. Portability problems such as the use of different operating systems (e.g. MS Windows - Linux). Problems associated with supporting tools needed to execute an analysis (e.g. proprietary - obsolete or in-house tools - etc.)."
+  utter_tmr/question_105:
+  - text: "All of the analysis files - any external libraries or routines necessary to run the model - any supporting tools (such as run scripts - or EXCEL based tools) which are used to execute the analysis chain or needed to generate key model outputs."
+  utter_tmr/question_106:
+  - text: "Description and usage of any software utilities - in addition to the thermal analysis tools - required to run the analysis cases. Description of any manual steps that are required to run the analysis cases. Versions of all thermal analysis software used to produce reference results. Versions of all thermal models in the supplieru2019s configuration control environment . Computational architecture and platform used by the supplier and used to generate the reference results."
+  utter_tmr/question_107:
+  - text: "Limit file and directory names to the characters A-Z - a-z - 0-9 - full stop - hyphen - and underscore. Do not use full stop in directory names. Use only supporting software utilities that are portable across computing platforms
+    - Use only supporting software utilities that are not based on proprietary software which cannot be included in a thermal model delivery."
+  utter_tmr/question_108:
+  - text: "Carry out a qualitative check of the converted GMM. Where possible include a visual check of the model geometry. Carry out a basic check of the model file - for example looking at optical properties - number of surfaces - node numbers etc. When converting a GMM and only one of the source/destination tools is available - it is useful to perform a round trip check. After GMM conversion - carry out a check for missing radiative couplings i.e. couplings that are present in either the source or destination models - but not both. Compare quantitatively the radiative couplings generated by the source and destination models."
+  utter_tmr/question_109:
+  - text: "In this context - a round trip means converting to the destination format and then back to the source format."
+  utter_tmr/question_110:
+  - text: "After TMM conversion - compare quantitatively the key model outputs with the source model outputs and assess the verification status of the converted model."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

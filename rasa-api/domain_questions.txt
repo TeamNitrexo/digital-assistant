@@ -1,0 +1,262 @@
+version: '2.0'
+nlu:
+- utter_question_1:
+  - text: The Coefficient of Thermal Expension (CTE) describe how the size (volume)
+      of an object evolves with a change of temperature. Its unit is 1/Kelvin.
+- utter_question_2:
+  - text: According to the ECSS - the Verification and Validation (V&V) process is
+      " to build confidence in the predictive capability of computanional model".
+      Verification is " the process of determining that a computational model accurately
+      represents the underlying mathematical model and its solution."  Validation
+      is " the process of determining the degree to which a model is an accurate representation
+      of the real world from the perspective of the intended uses of the model."
+- utter_question_3:
+  - text: According to the ECSS - the Verification and Validation (V&V) process is
+      " to build confidence in the predictive capability of computanional model".
+      Verification is " the process of determining that a computational model accurately
+      represents the underlying mathematical model and its solution." Validation is
+      " the process of determining the degree to which a model is an accurate representation
+      of the real world from the perspective of the intended uses of the model."
+- utter_question_4:
+  - text: 'The usual inputs for a thermo-elastic analysis are : Geometrical Mathematical
+      Model (GMM) for radiative calculations - Thermal Mathematical Model (TMM) for
+      temperature computation - Structural Finite Element Model (FEM) adapted for
+      thermo-elastic analysis.'
+- utter_question_5:
+  - text: Thermal loads may be defined as the internal loads in a structure caused
+      by the expansion or the contraction (or both) of certain structural elements
+      when being exposed to a temperature field which deviates from the one where
+      the same structure is stress free (in general the temperature at which the structure
+      parts have been assembled, usually being the room temperature).
+- utter_question_6:
+  - text: "The Thermo-Elastic Distorsions are governed by the following equation :\
+      \ \u0394L=\u237A*\u0394T*l, which \"l\" represent the original length of the\
+      \ structural element, \"\u0394L\" is the change in length of the structural\
+      \ element, \"\u237A\" is the  Coefficient of Thermal Expension (CTE) and \"\u0394\
+      T\" is the applied temperature change."
+- utter_question_7:
+  - text: 'Albedo is : "solar heat fluxes that are reflected by the surface of the
+      Planet".'
+- utter_question_8:
+  - text: "According to the ECSS - The Temperature Mean Deviation is \"sum of temperature\
+      \ differences (measured minus analysed values) divided by the number of correlated\
+      \ temperatures\", it could be calculate with the following equation: \u0394\
+      Tmean = (1/N)*SUM(Tmi-Tpi) from 1 to N, where: \u0394Tmean is the temperature\
+      \ mean deviation, Tmi is the measured temperature, Tpi is the temperature predicted\
+      \ by analysis and N is the number of samples.  "
+- utter_question_9:
+  - text: 'According to the ECSS - The Temperature Standard Deviation is the "measure
+      of statistical dispersion of temperature deviations, measuring how widely spread
+      the values of temperature differences in a data set are".  '
+- utter_question_10:
+  - text: SINAS is a software tool provided by ESA for mapping thermal nodes temperature
+      onto a Finite Element mesh. It used the Prescribed Average Temperature (PAT)
+      method for carry out the temperature mapping.
+- utter_question_11:
+  - text: MSC NASTRAN is a software using the Finite Elements methods allowing to
+      simulate the behaviour of an item or a system. It is widely used in the engineer
+      community.
+- utter_question_12:
+  - text: A robust system is a system which have low sensitivity to uncertainties
+      in input parameters.
+- utter_question_13:
+  - text: Radio Frequency (RF) represent an electromagnetic wave between 20kHz to
+      300GHz.
+- utter_question_14:
+  - text: Root Mean Square (RMS) is the square root of the arithmetic mean of the
+      squares of a set of numbers.
+- utter_question_15:
+  - text: I/F is the acronym for Interface (e.g.interface between two thermal components).
+- utter_question_16:
+  - text: The Primary Convergence Criteria refers to the Maximum temperature change
+      for each node between two successive iterations of the permanent solver.
+- utter_question_17:
+  - text: Radiative cavities (also called Radiative enclosure) are a set of surfaces
+      that cannot exchange heat by thermal radiation with the surfaces of another
+      cavity.
+- utter_question_18:
+  - text: Radiative enclosure (also called Radiative cavities) are a set of surfaces
+      that cannot exchange heat by thermal radiation with the surfaces of another
+      cavity.
+- utter_question_19:
+  - text: Carbon Fiber Reinforced Plastic (CFRP) is a material widely used in the
+      aerospace industry.
+- utter_question_20:
+  - text: TA6V is a titanium alloy widely use in the worldwide industry.
+- utter_question_21:
+  - text: The Centre-Point Prescribed Temperature (CPPT) is a method aiming to carried
+      out the Temperature Mapping.
+- utter_question_22:
+  - text: SINAS used the Prescribed Average Temperature (PAT) method for carry out
+      the temperature mapping.
+- utter_question_23:
+  - text: 'The Prescribed Average Temperature (PAT) is a method allowing to perform
+      the Temperature Mapping. It is the method used by the software tool SINAS. This
+      method is characterised as follow: the temperature of the thermal nodes is the
+      average temperature of the material or the volume of the same nodes.'
+- utter_question_24:
+  - text: 'There are mainly four methods to carry out the temperature mapping: the
+      Geometric interpolation Method, the Centre-Point Prescribed Temperature (CPPT)
+      method, the Patch-Wise Temperature Application method and the Prescribed Average
+      Temperature (PAT) method.'
+- utter_question_25:
+  - text: According to the ECSS - The Thermal Balance Test (TBT) is a "test conducted
+      to verify the adequacy of the thermal model and the adequacy of the thermal
+      design".
+- utter_question_26:
+  - text: A thermocouple is an instrument used for temperature measurement. It is
+      particularly widely used in the measurement of the TRP.
+- utter_question_27:
+  - text: "The cyclic convergence is used for orbit analysis. The software will compute\
+      \ the temperature of each orbital position (independently from each other) of\
+      \ an orbit without consider the convergence criteria at first. Then start again\
+      \ with the same orbit but with considering the convergence criteria by compare\
+      \ the result of the fist orbit and the second one. The link between the two\
+      \ successive orbital positions is, for a transient analysis, the temperatures\
+      \ calculation of the next orbital position is initialised with the temperature\
+      \ results of the previous orbital position. There are two types of criteria:\
+      \ a steady state and transient criteria. the steady state occurs only within\
+      \ the full orbit, not between each orbital position. But then, you have also\
+      \ a convergence criteria for the transient analysis, i.e. within the transient\
+      \ analysis, so the temperature calculation occurs at\_each iteration, you have\
+      \ several iterations within each time step, and you have several time steps\
+      \ within each orbital position. So, the temperature calculation during the transient\
+      \ for each iteration\_needs to converge, so when the temperature at each iteration\
+      \ has converged, according to the convergence\_criteria defined within the transient\
+      \ solver itself, then the temperature of the time step has been calculated so\
+      \ it then calculates the temperature of the next time step by doing the same\
+      \ process, i.e. calculating the temperatures at each iteration, etc.\_\_"
+- utter_question_28:
+  - text: Multi-Point Constraints (MPC) is a method allowing to connect the nodes
+      of the FE model using linear constraints. This method is mainly used to simulate
+      boundary conditions, when the basics ones do not represent the true behaviour.
+- utter_question_29:
+  - text: According to the ECSS - Temperature gradient is a "spatial derivation of
+      temperature in a point at a given time".
+- utter_question_30:
+  - text: 'There are three categories of external radiative exchange: solar flux,
+      Infrared (IR), Albedo.'
+- utter_question_31:
+  - text: According to the ECSS - Heat flux is a "thermal energy (heat) divided by
+      time and unit area perpendicular to the flow path".
+- utter_question_32:
+  - text: The Rayleigh Number is a dimensionless number that characterises the heat
+      transfer within a fluid.
+- utter_question_33:
+  - text: The discretization is the transition from a continuous state to a discrete
+      state. This allows us to digitally solve most of the problems governing our
+      systems.
+- utter_question_34:
+  - text: According to the ECSS - correlation is the "correspondence between analytical
+      predictions and test results".
+- utter_question_35:
+  - text: The Temperature Mapping (also called Thermal Mapping) is an exchange of
+      data between the Thermal Mathematical Model (TMM) and the Finite Elements model
+      (FEM). The temperature results of the TMM will be used as input heat load to
+      the FEM to carry out the thermo-elastic analysis.
+- utter_question_36:
+  - text: The Thermal Mapping (also called Temperature Mapping) is an exchange of
+      data between the Thermal Mathematical Model (TMM) and the Finite Elements model
+      (FEM). The temperature results of the TMM will be used as input heat load to
+      the FEM to carry out the thermo-elastic analysis.
+- utter_question_37:
+  - text: A transient mode, (or transient analysis) is a case where our system has
+      not reached its so-called "established" or "permanent" state, i.e. where it
+      has not converged towards its final solution.
+- utter_question_38:
+  - text: According to the ECSS - Heat link is an "unwanted heat exchange between
+      a thermally protected item and the environment". It could be a gain or a loss.
+- utter_question_39:
+  - text: According to the ECSS - Heat dissipation is a "thermal energy divided by
+      time produced by a source".
+- utter_question_40:
+  - text: According to the ECSS - Heat lift is a "transfer of a specified heat flow
+      rate from a lower to a higher temperature (e.g. heat pump)".
+- utter_question_41:
+  - text: According to the ECSS - Temperature stability is a "condition when the temperature
+      variation for a defined period of time is less than a defined (small) value".
+- utter_question_42:
+  - text: According to the ECSS - Temperature uniformity is a "condition when the
+      temperature difference or the temperature gradient at a given time is less than
+      a defined (small) value".
+- utter_question_43:
+  - text: According to the ECSS - Temperature variation is a "change of temperature
+      at a given point with respect to time (expressed by a temperature divided by
+      a time)".
+- utter_question_44:
+  - text: According to the ECSS - a Thermal Protection Subsystem (TPS) is a "thermal
+      control system to protect the spacecraft against aerodynamic heating (e.g. ablative
+      materials, ceramic tile and shingle, internal insulation, etc...)".
+- utter_question_45:
+  - text: The Coefficient of Moisture Expension (CME) is defined by the ratio of the
+      length variation to the mass variation due to moisture absorption or release,
+      expressed in %. It is used when the performance of the mission require hygro-elastic
+      analyses.
+- utter_question_46:
+  - text: A semi-grey body is a body with surfaces whose thermo-optical properties
+      are invariant with regard to wavelength in the solar and infrared spectrum.
+- utter_question_47:
+  - text: A round trip check is a conversion from the source model to the destination
+      model, then repeat the operation in the opposite direction and check that the
+      model is the same as at the start.
+- utter_question_48:
+  - text: IP is the acronym for In-Plane. It is used e.g. to talk about distorsions.
+- utter_question_49:
+  - text: OP is the acronym for Out-of-Plane. It is used e.g. to talk about distorsions.
+- utter_question_50:
+  - text: A singularity is a point in a discretised model where the solution is not
+      or not completely defined (e.g. reentrant angle, discontinuous behaviour, etc.).
+- utter_question_51:
+  - text: The Von Mises stress criterion is a plasticity criterion used in the study
+      of materials. It is used to determine the elasticity limit of the material according
+      to the various stresses applied to it.
+- utter_question_52:
+  - text: 'A zero stress check allows to verify that the model to be used for the
+      thermo-elastic analysis is well conditioned and suitable for thermo-elastic
+      analysis. This check verifies that no residual stresses occur for the following
+      specific model characteristics:'
+- utter_question_53:
+  - text: The eigenfrequency of a system is the frequency at which the system oscillates
+      when it is in free motion, i.e. without external excitation or dissipative forces.
+- utter_question_54:
+  - text: 'Several tools are used to verify the models accuracy for thermo-elastic
+      analyses: - Zero-stress check - Tests - Verification analysis - Correlation
+      success criteria'
+- utter_question_55:
+  - text: 'Guidelines were created for specific elements : - bolted element - struts
+      - washers - bimetallic areas'
+- utter_question_56:
+  - text: "Here is the guideline to model bolted elements: \na. Model the washer in\
+      \ 3D with an explicit modelling.\nb. Represent the bolts by beam elements to\
+      \ have the variation of the preload with temperature. \nc. Beam modelling of\
+      \ the bolt starts below the bolt head to the level of the nut. RBE3 elements\
+      \ should be used to model the 3D bolt-washer interface.\n"
+- utter_question_57:
+  - text: |
+      Here is the guideline to model glued elements:
+      a. 3D modelling of the glue joint
+      b. Use CHENXA and CPENTA finite elements
+      c. One element in the glue thickness is enough
+      d. Take into account manufacturing tolerances and therefore model the glue joint with its maximum thickness.
+- utter_question_58:
+  - text: "Here is the guideline to model bimetallic elements:\na. Structured meshing\
+      \ with CHEXA and CPENTA elements, with a minimum of two elements in each metal\
+      \ thickness. \nb. Use a \xAB merged \xBB interface between the two metallic\
+      \ parts\n"
+- utter_question_59:
+  - text: "According to te ECSS, here is the guideline to model electronics units\
+      \ : \n- the key to achieving good accuracy in the modelling of electronic units\
+      \ is the careful selection of the conductance values in the discontinuities.\n\
+      - a PCB is a classic example of a layered material. "
+- utter_question_60:
+  - text: "According to te ECSS, here is the guideline to model heat pipes: \n- Normally\
+      \ only the wall of the heat pipe is discretised in the axial direction. If an\
+      \ especially detailed model is required then circumferential discretisation,\
+      \ or the modelling of the heat pipe flanges, can be considered.\n- The vapour\
+      \ inside the heat pipe is modelled by a single arithmetic node. The inside of\
+      \ the heat pipe wall/wick is thermal linked to the vapour node via appropriate\
+      \ boiling/condensation Heat Transfer Coefficients (HTC)."
+- utter_question_61:
+  - text: "Modelling surfaces with struts: \na. To predict the axial displacement,\
+      \ build a detailed model of the strut \nb. Build a 1D model of this strut \n\
+      c. Correlate the 1D model to the detailed one"
