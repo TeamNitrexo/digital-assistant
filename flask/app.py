@@ -826,52 +826,50 @@ def user_profile():
 
 
 @app.route('/myjobs')
+@login_required
 def myjobs():
-    if 'username' in session:
-        current_user = models.Users.objects.get(user_email = session['username'])
+    current_user = models.Users.objects.get(user_email = session['username'])
 
-        page = request.args.get('page')
+    page = request.args.get('page')
 
-        if page:
-            try:
-                page_nb = int(page)
-            except:
-                page_nb = 0
-            if page_nb < 1:
-                page_nb = 1
-        else:
+    if page:
+        try:
+            page_nb = int(page)
+        except:
+            page_nb = 0
+        if page_nb < 1:
             page_nb = 1
-
-        items_per_page = 10 
-        offset = (page_nb - 1) * items_per_page
-
-        job_count = models.SinasJobTemplates.objects(job_owner=session['username']).count()
-
-        if offset > job_count:
-            offset = job_count // items_per_page
-
-        if (offset + items_per_page) > job_count:
-            next_page = None
-        else:
-            next_page = (offset // items_per_page) + 2
-
-        if offset == 0:
-            previous_page = None
-        else:
-            previous_page = (offset // items_per_page)
-
-        jobs = models.SinasJobTemplates.objects(job_owner=session['username']).skip( offset ).limit( items_per_page )
-
-        return render_template(
-            'sinas_jobs.html',
-            jobs = jobs,
-            next_page = next_page, 
-            previous_page = previous_page,
-            current_user = current_user,
-            page_nb = page_nb
-        )
     else:
-        return redirect(url_for('login'))
+        page_nb = 1
+
+    items_per_page = 10 
+    offset = (page_nb - 1) * items_per_page
+
+    job_count = models.SinasJobTemplates.objects(job_owner=session['username']).count()
+
+    if offset > job_count:
+        offset = job_count // items_per_page
+
+    if (offset + items_per_page) > job_count:
+        next_page = None
+    else:
+        next_page = (offset // items_per_page) + 2
+
+    if offset == 0:
+        previous_page = None
+    else:
+        previous_page = (offset // items_per_page)
+
+    jobs = models.SinasJobTemplates.objects(job_owner=session['username']).skip( offset ).limit( items_per_page )
+
+    return render_template(
+        'sinas_jobs.html',
+        jobs = jobs,
+        next_page = next_page, 
+        previous_page = previous_page,
+        current_user = current_user,
+        page_nb = page_nb
+    )
 
 
 

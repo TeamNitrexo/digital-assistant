@@ -1,97 +1,91 @@
 {% extends "base.html" %}
+
 {% block sidebar %}
-
-{{ super() }}
-
+  {{ super() }}
 {% endblock %}
 
 
 {% block dashboard_content %}
-
-
-
-    {% if warningmessage: %}
+  {% if warningmessage: %}
     <div class="container-fluid">
-        <div class="alert alert-warning alert-dismissible fade show" role="alert"  style="margin-top: 30px;">
-            {{warningmessage}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+      <div class="alert alert-warning alert-dismissible fade show" role="alert"  style="margin-top: 30px;">
+        {{warningmessage}}
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+  {% endif %}
+
+
+  <div class="container" style="margin-top: 30px;">
+    <ul class="list-unstyled list-group-item" style="border: 0px;">
+      <li style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #EEEEEE;">
+        <div style="width: 100%; padding: 10px; ">
+          <span class="" style="display:inline-block; font-size:16px; font-weight: 700; width: 150px; padding-right: 40px; text-align: left; vertical-align: middle;">Job Type</span>
+
+          <span class="" style="display:inline-block; font-size:16px; font-weight: 700; width: 150px; padding-right: 40px; vertical-align: middle;">Status</span>
+
+          <span class="" style="display:inline-block; font-size:16px; font-weight: 700; width: 300px; padding-right: 40px; vertical-align: middle;">Owner</span>
+
+          <span class="" style="display:inline-block; font-size:16px; font-weight: 700; width: 150px; padding-right: 40px; vertical-align: middle;">Created On</span>
         </div>
-    </div>
-    {% endif %}
+      </li>
 
-
-    <div class="container" style="margin-top: 30px;">
-        
-        
-        <ul class="list-unstyled list-group-item" style="border: 0px;">
-            <li style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #EEEEEE;">
-                <div style="width: 100%; padding: 10px; ">
-                    <span class="" style="display:inline-block; font-size:16px; font-weight: 700; width: 150px; padding-right: 40px; text-align: left; vertical-align: middle;">Job Type</span>
-                    <span class="" style="display:inline-block; font-size:16px; font-weight: 700; width: 150px; padding-right: 40px; vertical-align: middle;">Status</span>
-                    <span class="" style="display:inline-block; font-size:16px; font-weight: 700; width: 300px; padding-right: 40px; vertical-align: middle;">Owner</span>
-                    <span class="" style="display:inline-block; font-size:16px; font-weight: 700; width: 150px; padding-right: 40px; vertical-align: middle;">Created On</span>
-                </div>
-            </li>
-        {% if jobs: %}
-        
-            
+      {% if jobs: %}
         {% for job in jobs: %}
-            
+          <li style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #EEEEEE;">
+            <div style="width: 100%; padding: 10px; ">
+              <span class="" style="display: inline-block; width: 150px; padding-right: 40px; text-align: left;">
+                <a href="#">{{ job.task }}</a>
+              </span>
 
-            <li style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #EEEEEE;">
-                <div style="width: 100%; padding: 10px; ">
-                    <span class="" style="display: inline-block; width: 150px; padding-right: 40px; text-align: left;"><a href="#">{{ job.task }}</a></span>
-                    <span class="" style="display: inline-block; width: 150px;">{{ job.job_status}}</span>
-                    <span class="" style="display: inline-block; width: 300px;">{{ job.job_owner}}</span>
-                    <span class="" style="display: inline-block; width: 150px;">{{ job.id.generation_time}}</span>
-                    <span class="" style="display: inline-block; width: 100px;">
-                        <a href="/download/{{job.id}}">
-                            Download
-                        </a>
-                    </span>
-                    <span class="" style="display: inline-block; width: 100px;">
-                        <a href="/sinas/delete/{{job.id}}">
-                            Delete
-                        </a>
-                    </span>
-                </div>
-            </li>
-            
+              <span class="" style="display: inline-block; width: 150px;">{{ job.job_status}}</span>
+
+              <span class="" style="display: inline-block; width: 300px;">{{ job.job_owner}}</span>
+
+              <span class="" style="display: inline-block; width: 150px;">{{ job.id.generation_time}}</span>
+
+              <span class="" style="display: inline-block; width: 100px;">
+                <a href="/download/{{job.id}}">Download</a>
+              </span>
+
+              <span class="" style="display: inline-block; width: 100px;">
+                <a href="/sinas/delete/{{job.id}}">Delete</a>
+              </span>
+            </div>
+          </li>
         {% endfor %}
-        {% endif %}
-        </ul>
-        
-    </div>
+      {% endif %}
+    </ul>
+  </div>
 
-    <nav aria-label="..." class="center">
-        <ul class="pagination justify-content-center">
-            {% if previous_page: %}
-          <li class="page-item">
-            <a class="page-link" href="/myjobs?page={{previous_page}}" tabindex="-1">Previous</a>
-          </li>
-          {% else %}
-            <li class="page-item disabled">
-              <a class="page-link" href="#" tabindex="-1">Previous</a>
-            </li>
-          {% endif %}
-          <li class="page-item active">
-            <a class="page-link" href="#">{{page_nb}} <span class="sr-only">(current)</span></a>
-          </li>
-          {% if next_page: %}
-          <li class="page-item">
-            <a class="page-link" href="/myjobs?page={{next_page}}">Next</a>
-          </li>
-          {% else %}
-
+  <nav aria-label="..." class="center">
+    <ul class="pagination justify-content-center">
+      {% if previous_page: %}
+        <li class="page-item">
+          <a class="page-link" href="/myjobs?page={{ previous_page }}" tabindex="-1">Previous</a>
+        </li>
+      {% else %}
           <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Next</a>
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
           </li>
-          {% endif %}
-        </ul>
-      </nav>
-
+      {% endif %}
+        <li class="page-item active">
+          <a class="page-link" href="#">{{ page_nb }} <span class="sr-only">(current)</span></a>
+        </li>
+      {% if next_page: %}
+        <li class="page-item">
+          <a class="page-link" href="/myjobs?page={{ next_page }}">Next</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#" tabindex="-1">Next</a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
 {% endblock %}
 
 
