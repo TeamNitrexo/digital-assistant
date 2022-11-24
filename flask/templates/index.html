@@ -193,106 +193,106 @@
   </script>
 
   <script>
-      $(document).ready(function(){
-
+    $(document).ready(function(){
       $("#but_upload").click(function(){
+        var fd = new FormData();
+        var files = $('#file')[0].files;
 
-          var fd = new FormData();
-          var files = $('#file')[0].files;
-          
-          // Check file selected or not
-          if(files.length > 0 ){
+        // Check file selected or not
+        if(files.length > 0 ){
           fd.append('file',files[0]);
 
           $.ajax({
-              url: '/upload',
-              type: 'post',
-              data: fd,
-              contentType: false,
-              processData: false,
-              success: function(response){
-                  if(response != 0){
-                      $("#img").attr("src",response); 
-                      $(".preview img").show(); // Display image element
-                  }else{
-                      alert('file not uploaded');
-                  }
-              },
-          });
-          }else{
-          alert("Please select a file.");
-          }
-      });
-      });
-  </script>
-
-  <script>
-      function addText() {
-          botui.action.text({
-              action: {
-                  sub_type: "file",
-                  cssClass: 'file-upload',
-                  autoHide: false,
-                  addMessage: false,
-                  button: {
-                  icon: 'chevron-circle-right',
-                  label: 'Upload'
-                  }
+            url: '/upload',
+            type: 'post',
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+              if(response != 0){
+                  $("#img").attr("src",response); 
+                  $(".preview img").show(); // Display image element
               }
-              }).then(function (res) { // will be called when a button is clicked.
-                              console.log(res.value); // will print "one" from 'value'
-                              botui.message.add({
-                              delay: 200,
-                              type: 'html',
-                              content: '<img src="'+ res.value + '" />'
-                              });
-                          });
-                      
-      }
-  </script>
-
-  <script>
-      function addFile() {
-          botui.message.add({
-              
-                              delay: 200,
-                              type: 'html',
-                              content: '<input id="fileupload" type="file" name="fileupload" /><button id="upload-button" onclick="uploadFile()"> Upload </button>'
-              });
-                      
-      }
-  </script>
-
-  <script>
-      $(document).ready(function () {
-      $("button#buttonajax").click(function(){
-  $.get("/message", function(data, status){
-  botui.message.add({
-          content: data.message
+              else{
+                alert('File not uploaded');
+              }
+            }
+          });
+        }
+        else {
+          alert("Please select a file.");
+        }
       });
-      botui.action.button({
-  action: [
-      { // show only one button
-      text: 'One',
-      value: 'one'
-      },
-      {
-          text: 'Two',
-          value: 'two'
-      }
-  ]
-  }).then(function (res) { // will be called when a button is clicked.
-      console.log(res.value); // will print "one" from 'value'
-      url = '/message?reply=' + res.value
-      $.get(url, function(data, status){
+    });
+  </script>
+
+  <script>
+    function addText() {
+      botui.action.text({
+        action: {
+          sub_type: "file",
+          cssClass: 'file-upload',
+          autoHide: false,
+          addMessage: false,
+          button: {
+            icon: 'chevron-circle-right',
+            label: 'Upload'
+          }
+        }
+      }).then(function (res) {
+        // will be called when a button is clicked.
+        botui.message.add({
+          delay: 200,
+          type: 'html',
+          content: '<img src="'+ res.value + '" />'
+        });
+      });
+    };
+  </script>
+
+  <script>
+    function addFile() {
       botui.message.add({
-          content: data.message
+        delay: 200,
+        type: 'html',
+        content: '<input id="fileupload" type="file" name="fileupload" /><button id="upload-button" onclick="uploadFile()"> Upload </button>'
       });
-  });
-  });
-  });
+    };
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      $("button#buttonajax").click(function() {
+        $.get("/message", function(data, status) {
+          botui.message.add({
+            content: data.message
+          });
+
+          botui.action.button({
+            action: [
+              { 
+                // show only one button
+                text: 'One',
+                value: 'one'
+              },
+              {
+                text: 'Two',
+                value: 'two'
+              }
+            ]
+          }).then(function (res) {
+            // will be called when a button is clicked.
+            url = '/message?reply=' + res.value;
+
+            $.get(url, function(data, status){
+              botui.message.add({
+                content: data.message
+              });
+            });
+          });
+        });
       });
-      });
+    });
   </script>
 
   <button onclick="addFile()">Add File</button>
