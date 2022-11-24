@@ -15,7 +15,6 @@ from global_modules.data import no_user_found
 
 ### FLASK DEPENDENCIES ###
 from flask import Flask, render_template, session, jsonify, request, send_file, redirect, url_for, send_from_directory, flash
-from flask_mail import Mail
 
 
 ### MONGO DATABASE MODELS ###
@@ -79,10 +78,8 @@ def admin_login_required(viewFunction):
 
 # HOME PAGE
 @app.route('/')
+@login_required
 def index():
-    if not 'username' in session:
-        return redirect(url_for('login'))
-
     current_user = models.Users.objects(user_email__exact = session['username'])[0]
 
     session['branch_set'] = False
