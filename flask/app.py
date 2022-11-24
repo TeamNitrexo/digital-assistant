@@ -264,11 +264,8 @@ def sinas():
 
 # CHATBOT COMMUNICATION ENDPOINTS
 @app.route('/message')
+@login_required
 def message():
-    if not 'username' in session:
-        session.pop('username')
-        return jsonify(no_user_found)
-
     reply = request.args.get('reply')
     question = request.args.get('question')
 
@@ -331,8 +328,6 @@ def message():
 
                 response = jsonify(db_reply['data'])
 
-                #response = jsonify(branch_one_response_body)
-        
         if session['branch'] == 'Thermal Model Reduction':
             db_reply = col_messages.find_one({"name": 'branch_thermal_model_reduction'})
 
@@ -343,8 +338,6 @@ def message():
 
             response = jsonify(db_reply['data'])
 
-            #response = jsonify(branch_three_ask)
-        
         if session['branch'] == 'Temperature Mapping' or reply == 'branch_two_task_options_response_body':
             print('XXXXXX')
 
@@ -506,8 +499,6 @@ def message():
                                     "buttons": main_menu_buttons
                                 }
                                 response = jsonify(response_json)
-
-                                # reset
 
         if session['branch'] == "Perform TMR" or reply == "Perform TMR":
             print('XXXXXX')
