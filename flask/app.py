@@ -284,45 +284,25 @@ def message():
 
         if session['branch'] == 'Thermo-Elastic Verification':
             if reply == 'branch_one_options':
-                print("Branch 1 options.")
-
                 db_reply = col_messages.find_one({"name": 'branch_one_options_response_body'})
 
                 response = jsonify(db_reply['data'])
-
-                #response = jsonify(branch_one_options_response_body)
             elif reply == 'GMM':
-                print("Geometrical Mathematical Model")
-
                 db_reply = col_messages.find_one({"name": 'branch_one_gmm'})
 
                 response = jsonify(db_reply['data'])
-
-                #response = jsonify(branch_one_gmm)
             elif reply == 'TMM':
-                print("Thermal Mathematical Model")
-
                 db_reply = col_messages.find_one({"name": 'branch_one_tmm'})
 
                 response = jsonify(db_reply['data'])
-
-                #response = jsonify(branch_one_tmm)
             elif reply == 'SM':
-                print("Structural Model")
-
                 db_reply = col_messages.find_one({"name": 'branch_one_sm'})
 
                 response = jsonify(db_reply['data'])
-
-                #response = jsonify(branch_one_sm)
             elif reply == 'TM':
-                print("Themperature Mapping")
-
                 db_reply = col_messages.find_one({"name": 'branch_one_tm'})
 
                 response = jsonify(db_reply['data'])
-
-                #response = jsonify(branch_one_tm)
             else:
                 db_reply = col_messages.find_one({"name": 'branch_one_response_body'})
 
@@ -339,8 +319,6 @@ def message():
             response = jsonify(db_reply['data'])
 
         if session['branch'] == 'Temperature Mapping' or reply == 'branch_two_task_options_response_body':
-            print('XXXXXX')
-
             if reply == 'branch_two_task_options_response_body' or reply == 'Temperature Mapping':
                 db_reply = col_messages.find_one({"name": 'branch_two_task_options_response_body'})
 
@@ -501,8 +479,6 @@ def message():
                                 response = jsonify(response_json)
 
         if session['branch'] == "Perform TMR" or reply == "Perform TMR":
-            print('XXXXXX')
-
             session.pop('sinas_job_id', None)
             session.pop('tmr_job_id', None)
             session['task'] = 'perform_tmr'
