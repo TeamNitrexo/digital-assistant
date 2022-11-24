@@ -41,14 +41,6 @@ app.secret_key = global_modules.config.SECRET_KEY
 ### FLASK APP CONFIGURATIONS ###
 app.config['UPLOAD_FOLDER'] = global_modules.config.UPLOAD_FOLDER
 
-app.config['MAIL_SERVER']= global_modules.config.MAIL_SERVER
-app.config['MAIL_PORT'] = global_modules.config.MAIL_PORT
-app.config['MAIL_USERNAME'] = global_modules.config.MAIL_USERNAME
-app.config['MAIL_PASSWORD'] = global_modules.config.MAIL_PASSWORD
-app.config['MAIL_USE_TLS'] = global_modules.config.MAIL_USE_TLS
-app.config['MAIL_USE_SSL'] = global_modules.config.MAIL_USE_SSL
-mail = Mail(app)
-
 
 ### VIEW DECORATORS ###
 def login_required(viewFunction):
@@ -195,12 +187,8 @@ def delete_myjob(id):
 
 
 @app.route('/download/<sinas_job_id>')
+# @login_required
 def download_zip(sinas_job_id):
-    if not 'username' in session:
-        session.pop('username')
-
-        return redirect(url_for('login'))
-
     job_path = "/uploads/" + str(sinas_job_id) + "/"
     base_path = pathlib.Path(job_path)
     data = io.BytesIO()
@@ -221,11 +209,8 @@ def download_zip(sinas_job_id):
 
 
 @app.route('/sinas')
+# @login_required
 def sinas():
-    if not 'username' in session:
-        session.pop('username')
-        return jsonify(no_user_found)
-
     button_input = request.args.get('button')
     text_input = request.args.get('text')
 
@@ -269,7 +254,7 @@ def sinas():
                 write_to_ini(replace_value_variable(job_template.template[action_id].addToIni, job_template.template[action_id].value))
 
             job_template.save()
-        else:        
+        else:   
             response = run_job(session['sinas_job_id'])
 
         if 'no_response' in session:
@@ -277,9 +262,6 @@ def sinas():
                 response = run_job(session['sinas_job_id'])
 
         return response
-    else:
-        # return to main task if job id doesn't exist in session
-        pass
 
 
 
@@ -772,17 +754,15 @@ def admin_user_delete(id, **_):
 @app.route('/admin/users/edit/<id>' , methods = ["GET", "POST"])
 @admin_login_required
 def admin_user_edit(id, admin_user):
-    if request.method == "GET":
-        user_to_edit = models.Users.objects.get(id = id)
+    user_to_edit = models.Users.objects.get(id = id)
 
+    if request.method == "GET":
         return render_template(
             "edituser.html", 
             user = user_to_edit, 
             current_user = admin_user
         )
     elif request.method == "POST":
-        user_to_edit = models.Users.objects.get(id = id)
-
         user_to_edit.update(
             id = id,
             first_name = request.form['user_first_name'], 
@@ -824,65 +804,25 @@ def test_video():
 
 # USER PAGES
 @app.route('/profile' , methods=["GET", "POST"])
-def my_profile():
-    current_user = models.Users.objects.get(user_email = session['username'])
+@login_required
+def user_profile():
+    user = models.Users.objects.get(user_email = session['username'])
 
-    if 'username' in session:
-        user = models.Users.objects.get(user_email = session['username'])
-
-        if request.method == "GET":
-            user_edit = models.Users.objects.get(id = user.id)
-
-            return render_template(
-                "update_profile.html", 
-                user = user_edit, 
-                current_user = current_user
-            )
-        elif request.method == "POST":
-            user_edit = models.Users.objects.get(id = user.id)
-
-            first_name = request.form['user_first_name']
-
-            last_name = request.form['user_last_name']
-
-            user_email = request.form['user_email']
-
+    if request.method == "GET":
+        return render_template(
+            "update_profile.html",
+            current_user = user
+        )
+    elif request.method == "POST":
+        user.update(
+            id = user.id, 
+            first_name = request.form['user_first_name'],
+            last_name = request.form['user_last_name'], 
+            user_email = request.form['user_email'], 
             user_password = request.form['user_password']
+        )
 
-            # validate submission
-            if first_name == '' or user_email == '' or user_password == '':
-                return render_template(
-                    'update_profile.html', 
-                    warningmessage = "Please fill the complete form.", 
-                    user = user_edit, 
-                    current_user = current_user
-                )
-
-            if not first_name and last_name and user_email and user_password:
-                return render_template(
-                    'update_profile.html', 
-                    warningmessage = "Please fill the complete form.", 
-                    user = user_edit, 
-                    current_user = current_user
-                )
-
-            user_edit.update(
-                id = user.id, 
-                first_name = first_name,
-                last_name = last_name, 
-                user_email = user_email, 
-                user_password = user_password
-            )
-            user_edit = models.Users.objects.get(id = user.id)
-
-            return render_template(
-                'update_profile.html', 
-                warningmessage = "User updated successfully.", 
-                user = user_edit, 
-                current_user = current_user
-            )
-    else:
-        return redirect(url_for('login'))
+        return redirect(url_for('user_profile'))
 
 
 @app.route('/myjobs')

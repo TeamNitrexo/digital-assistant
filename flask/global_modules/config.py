@@ -18,7 +18,7 @@ ALLOWED_EXTENSIONS = {'agg', 'bdf', 'con', 'ctl', 'csv', 'gdf', 'ldf', 'nco', 'n
 
 MAIL_SERVER = 'nitrexo.com'
 MAIL_PORT = 587
-MAIL_USERNAME = 'soham.more@nitrexo.com'
-MAIL_PASSWORD = 'Thinkpadt420!'
+# MAIL_USERNAME = 'soham.more@nitrexo.com'
+# MAIL_PASSWORD = 'Thinkpadt420!'
 MAIL_USE_TLS = True
 MAIL_USE_SSL = False
