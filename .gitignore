@@ -8,3 +8,4 @@ mongo
 flask/tmr
 flask/uploads
 flask/Dockerfile
+old-rasa-api

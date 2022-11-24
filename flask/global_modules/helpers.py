@@ -157,7 +157,8 @@ def get_rasa_response(question):
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
     res = requests.post(
-        'http://rasa-service:5005/webhooks/rest/webhook',
+        # 'http://rasa-service:5005/webhooks/rest/webhook', # connected to docker Rasa image
+        url = '', 
         data = data,
         headers = headers
     )
