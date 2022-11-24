@@ -1,99 +1,104 @@
 {% extends "base.html" %}
 
 {% block sidebar %}
-    {{ super() }}
+  {{ super() }}
 {% endblock %}
 
 {% block dashboard_content %}
-    {% if warningmessage: %}
-        <div class="container-fluid">
-            <div class="alert alert-warning alert-dismissible fade show" role="alert"  style="margin-top: 30px;">
-                {{warningmessage}}
+  {% if warningmessage: %}
+    <div class="container-fluid">
+      <div class="alert alert-warning alert-dismissible fade show" role="alert"  style="margin-top: 30px;">
+        {{warningmessage}}
 
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="container" style="margin-top: 30px;">
+    <a href="/admin/users/add" type="button" class="btn btn-primary btn-sm">Add New User</a>
+  </div>
+
+  <div class="container" style="margin-top: 30px;">
+    <ul class="list-unstyled list-group-item" style="border: 0px;">
+      <li style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #EEEEEE;">
+        <div style="width: 100%; padding: 10px; ">
+          <span class="" style="display:inline-block; font-size:16px; font-weight: 700; width: 250px; padding-right: 40px; text-align: left; vertical-align: middle;">User</span>
+
+          <span class="" style="display:inline-block; font-size:16px; font-weight: 700; width: 250px; padding-right: 40px; vertical-align: middle;">Email</span>
+
+          <span class="" style="display:inline-block; font-size:16px; font-weight: 700; width: 150px; padding-right: 40px; vertical-align: middle;">User Type</span>
+
+          <span class="" style="display:inline-block; font-size:16px; font-weight: 700; width: 150px; padding-right: 40px; vertical-align: middle;">Created On</span>
         </div>
-    {% endif %}
+      </li>
 
-    <div class="container" style="margin-top: 30px;">
-        <a href="/admin/users/add" type="button" class="btn btn-primary btn-sm">Add New User</a>
-    </div>
+      {% if users: %}
+        {% for user in users: %}
+          <li style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #EEEEEE;">
+            <div style="width: 100%; padding: 10px; ">
+              <span class="" style="display: inline-block; width: 250px; padding-right: 40px; text-align: left;">
+                <a href="/admin/users/edit/{{ user.id}}">{{ user.first_name }} {{ user.last_name }}</a>
+              </span>
 
-    <div class="container" style="margin-top: 30px;">
-        <ul class="list-unstyled list-group-item" style="border: 0px;">
-            <li style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #EEEEEE;">
-                <div style="width: 100%; padding: 10px; ">
-                    <span class="" style="display:inline-block; font-size:16px; font-weight: 700; width: 250px; padding-right: 40px; text-align: left; vertical-align: middle;">User</span>
+              <span class="" style="display: inline-block; width: 250px;">{{ user.user_email }}</span>
 
-                    <span class="" style="display:inline-block; font-size:16px; font-weight: 700; width: 250px; padding-right: 40px; vertical-align: middle;">Email</span>
+              <span class="" style="display: inline-block; width: 150px;">{{ user.user_type }}</span>
 
-                    <span class="" style="display:inline-block; font-size:16px; font-weight: 700; width: 150px; padding-right: 40px; vertical-align: middle;">User Type</span>
+              <span class="" style="display: inline-block; width: 30px;">
+                <a href="/admin/users/delete/{{user.id}}">
+                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
 
-                    <span class="" style="display:inline-block; font-size:16px; font-weight: 700; width: 150px; padding-right: 40px; vertical-align: middle;">Created On</span>
-                </div>
-            </li>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                  </svg>
+                </a>
+              </span>
 
-            {% if users: %}
-                {% for user in users: %}
-                    <li style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #EEEEEE;">
-                        <div style="width: 100%; padding: 10px; ">
-                            <span class="" style="display: inline-block; width: 250px; padding-right: 40px; text-align: left;">
-                                <a href="/admin/users/edit/{{ user.id}}">{{ user.first_name }} {{ user.last_name }}</a>
-                            </span>
+              <span class="" style="display: inline-block; width: 30px;">
+                <a href="/admin/users/edit/{{user.id}}">
+                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                  </svg>
+                </a>
+              </span>
+            </div>
+          </li>
+        {% endfor %}
+      {% endif %}
+    </ul>
+  </div>
 
-                            <span class="" style="display: inline-block; width: 250px;">{{ user.user_email}}</span>
+  <nav aria-label="..." class="center">
+    <ul class="pagination justify-content-center">
+      {% if previous_page: %}
+        <li class="page-item">
+          <a class="page-link" href="/admin/users?page={{previous_page}}" tabindex="-1">Previous</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+      {% endif %}
 
-                            <span class="" style="display: inline-block; width: 150px;">{{ user.user_type}}</span>
+      <li class="page-item active">
+        <a class="page-link" href="#">
+          {{ page_nb }}
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
 
-                            <span class="" style="display: inline-block; width: 30px;">
-                                <a href="/admin/users/delete/{{user.id}}">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                    </svg>
-                                </a>
-                            </span>
-
-                            <span class="" style="display: inline-block; width: 30px;">
-                                <a href="/admin/users/edit/{{user.id}}">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                                    </svg>
-                                </a>
-                            </span>
-                        </div>
-                    </li>
-                {% endfor %}
-            {% endif %}
-        </ul>
-    </div>
-
-    <nav aria-label="..." class="center">
-        <ul class="pagination justify-content-center">
-            {% if previous_page: %}
-                <li class="page-item">
-                    <a class="page-link" href="/admin/users?page={{previous_page}}" tabindex="-1">Previous</a>
-                </li>
-            {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">Previous</a>
-                </li>
-            {% endif %}
-                <li class="page-item active">
-                    <a class="page-link" href="#">{{page_nb}} <span class="sr-only">(current)</span></a>
-                </li>
-            {% if next_page: %}
-                <li class="page-item">
-                    <a class="page-link" href="/admin/users?page={{next_page}}">Next</a>
-                </li>
-            {% else %}
-
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Next</a>
-            </li>
-            {% endif %}
-        </ul>
-    </nav>
+      {% if next_page: %}
+        <li class="page-item">
+          <a class="page-link" href="/admin/users?page={{ next_page }}">Next</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#" tabindex="-1">Next</a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
 {% endblock %}

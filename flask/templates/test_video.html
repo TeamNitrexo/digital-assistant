@@ -1,20 +1,15 @@
 {% extends "base.html" %}
+
 {% block sidebar %}
-
-{{ super() }}
-
+  {{ super() }}
 {% endblock %}
 
-
 {% block dashboard_content %}
+  <video width="320" height="240" controls>
+    <source src="{{ video_url }}" type="video/mp4">
 
-
-
-<video width="320" height="240" controls>
-    <source src="{{video_url}}" type="video/mp4">
     Your browser does not support the video tag.
-</video>
-
+  </video>
 {% endblock %}
 
 
