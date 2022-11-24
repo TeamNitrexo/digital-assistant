@@ -273,7 +273,6 @@ def message():
         return jsonify(no_user_found)
 
     reply = request.args.get('reply')
-
     question = request.args.get('question')
 
     if reply:
@@ -552,6 +551,7 @@ def message():
         response = get_rasa_response(question)
 
     response.headers.add("Access-Control-Allow-Origin", "*")
+
     return response
 
 

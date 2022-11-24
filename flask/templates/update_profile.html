@@ -5,17 +5,21 @@
 {% endblock %}
 
 {% block dashboard_content %}
-  {% if warningmessage: %}
-    <div class="container-fluid">
-      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        {{ warningmessage }}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div id="flash-message" class="container-fluid" style="margin: 5% auto; width: 60%;">
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
 
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    </div>
-  {% endif %}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="let fmsg = document.getElementById('flash-message'); fmsg.parentNode.removeChild(fmsg)">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+  {% endwith %}
 
   <div class="container-fluid"  style="margin-top: 70px;">
     <form action="/profile" method="post">
