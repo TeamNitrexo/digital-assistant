@@ -1,11 +1,10 @@
 venv
 .dockerignore
 docker-compose.yml
-OLD_CODEBASE
 mongo
 .vscode
 **/__pycache__
 flask/tmr
 flask/uploads
 flask/Dockerfile
-old-rasa-api
+OLD_NITREXO_CODE
