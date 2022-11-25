@@ -158,14 +158,13 @@ def get_rasa_response(question):
 
     res = requests.post(
         # 'http://rasa-service:5005/webhooks/rest/webhook',
-        url = 'http://localhost:5005/webhooks/rest/webhook', # to run rasa image as a server, type the following in cmd line: docker run -p 5005:5005 rasa/rasa:latest run --enable-api
+        url = 'http://localhost:5005/webhooks/rest/webhook',
         data = data,
         headers = headers
     )
 
     res = res.json()
-    # val = res[0]['text']
-    val = ''
+    val = res[0]['text']
 
     if val == "I'm sorry, I did not understand the question. Could you please rephrase the Question?":
         rasa_reply = {
@@ -185,6 +184,8 @@ def get_rasa_response(question):
         }
 
     response = jsonify(rasa_reply)
+
+    print(response)
 
     return response
 

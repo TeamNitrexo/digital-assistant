@@ -76,7 +76,7 @@ def admin_login_required(viewFunction):
 ### Flask Routes ###
 ####################
 
-# HOME PAGE
+# DIGITAL ASSISTANT
 @app.route('/')
 @login_required
 def index():
@@ -91,178 +91,6 @@ def index():
     )
 
 
-
-# ACCOUNT LOGIN/LOGOUT
-@app.route('/logout')
-@login_required
-def logout():
-    session.clear()
-
-    return redirect(url_for('login'))
-
-
-@app.route('/login',  methods = ['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-
-        queryset = models.Users.objects(user_email__exact = email)
-
-        if queryset.count() == 1 and check_password_hash(queryset[0].user_password, password):
-                session['username'] = email # !change
-
-                return redirect(url_for('index'))
-        else:
-            flash(
-                message = "Invalid credentials",
-                category = 'danger'
-            )
-
-    return render_template('login.html')
-
-
-# !development
-@app.route('/ru')
-def reset_users():
-    session.clear()
-    models.Users.objects.delete()
-
-    admin1Account = models.Users(
-        first_name = 'test admin',
-        last_name = '1',
-        user_email = 'admin1@nitrexo.com',
-        user_password = '1',
-        user_type = 'Admin'
-    )
-    admin1Account.save()
-
-    admin2Account = models.Users(
-        first_name = 'test admin',
-        last_name = '2',
-        user_email = 'admin2@nitrexo.com',
-        user_password = '1',
-        user_type = 'Admin'
-    )
-    admin2Account.save()
-
-    userAccount = models.Users(
-        first_name = 'test',
-        last_name = 'user',
-        user_email = 'user@nitrexo.com',
-        user_password = '1',
-        user_type = 'User'
-    )
-    userAccount.save()
-
-    return redirect(url_for('login'))
-
-
-
-# SINAS JOBS
-@app.route('/sinas/delete/<id>')
-def delete_myjob(id):
-    if 'username' in session:
-        job = models.SinasJobTemplates.objects.get(id = id)
-
-        if job:
-            if job.job_owner == session['username']:
-                # delete files
-                shutil.rmtree(
-                    "/uploads/"+id,
-                    ignore_errors=True
-                )
-
-                # delete from database
-                job.delete()
-
-                return redirect(request.referrer)
-            else:
-                return redirect(request.referrer)
-        else:
-            return redirect(request.referrer)
-
-
-@app.route('/download/<sinas_job_id>')
-# @login_required
-def download_zip(sinas_job_id):
-    job_path = "/uploads/" + str(sinas_job_id) + "/"
-    base_path = pathlib.Path(job_path)
-    data = io.BytesIO()
-
-    with zipfile.ZipFile(data, mode='w') as z:
-        for f_name in base_path.iterdir():
-            z.write(f_name)
-
-    data.seek(0)
-    zip_filename = str(sinas_job_id) + ".zip"
-
-    return send_file(
-        data,
-        mimetype='application/zip',
-        as_attachment=True,
-        attachment_filename=zip_filename
-    )
-
-
-@app.route('/sinas')
-# @login_required
-def sinas():
-    button_input = request.args.get('button')
-    text_input = request.args.get('text')
-
-    if 'sinas_job_id' in session:    
-        if button_input:
-            job_template = models.SinasJobTemplates.objects.get(job_id = session['sinas_job_id'])
-
-            for i in range(len(job_template.template)):
-                if job_template.template[i].task_name == job_template.next_action:
-                    action_id = i
-
-            job_template.template[action_id].value = str(button_input)
-
-            job_template.template[action_id].valuePresent.value = True
-
-            if job_template.template[action_id].valuePresent.dependentOnThisParameter:
-                if job_template.template[action_id].value == "true":
-                    job_template.next_action = job_template.template[action_id].valuePresent.valueTrue
-                elif job_template.template[action_id].value == "false":
-                    job_template.next_action = job_template.template[action_id].valuePresent.valueFalse
-                else:
-                    job_template.next_action = job_template.template[action_id].valuePresent.valueTrue
-
-                write_to_ini(replace_value_variable(job_template.template[action_id].addToIni, job_template.template[action_id].value))
-
-            job_template.save()
-        elif text_input:
-            job_template = models.SinasJobTemplates.objects.get(job_id = session['sinas_job_id'])
-
-            for i in range(len(job_template.template)):
-                if job_template.template[i].task_name == job_template.next_action:
-                    action_id = i
-
-            job_template.template[action_id].value = text_input
-
-            job_template.template[action_id].valuePresent.value = True
-
-            if job_template.template[action_id].valuePresent.dependentOnThisParameter:
-                job_template.next_action = job_template.template[action_id].valuePresent.valueTrue
-
-                write_to_ini(replace_value_variable(job_template.template[action_id].addToIni, job_template.template[action_id].value))
-
-            job_template.save()
-        else:   
-            response = run_job(session['sinas_job_id'])
-
-        if 'no_response' in session:
-            while('no_response' in session):
-                response = run_job(session['sinas_job_id'])
-
-        return response
-
-
-
-# CHATBOT COMMUNICATION ENDPOINTS
 @app.route('/message')
 @login_required
 def message():
@@ -607,8 +435,72 @@ def upload():
         pass
 
 
+@app.route('/tutorials/<tutorial_id>/<chapter>/<lesson>/<filename>' , methods=["GET", "POST"])
+def send_tutorial_video(tutorial_id, chapter, lesson, filename):
+    folder = "/tutorials/" + tutorial_id + "/" + chapter + "/" + lesson
 
-# ADMIN PAGES
+    return send_from_directory(
+        folder,
+        filename,
+        as_attachment = False
+    )
+
+
+
+# ACCOUNT LOGIN/LOGOUT & PROFILE
+@app.route('/logout')
+@login_required
+def logout():
+    session.clear()
+
+    return redirect(url_for('login'))
+
+
+@app.route('/login',  methods = ['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        queryset = models.Users.objects(user_email__exact = email)
+
+        if queryset.count() == 1 and check_password_hash(queryset[0].user_password, password):
+                session['username'] = email # !change
+
+                return redirect(url_for('index'))
+        else:
+            flash(
+                message = "Invalid credentials",
+                category = 'danger'
+            )
+
+    return render_template('login.html')
+
+
+
+# USER/ADMIN PAGES
+@app.route('/profile' , methods=["GET", "POST"])
+@login_required
+def user_profile():
+    user = models.Users.objects.get(user_email = session['username'])
+
+    if request.method == "GET":
+        return render_template(
+            "update_profile.html",
+            current_user = user
+        )
+    elif request.method == "POST":
+        user.update(
+            id = user.id, 
+            first_name = request.form['user_first_name'],
+            last_name = request.form['user_last_name'], 
+            user_email = request.form['user_email'], 
+            user_password = request.form['user_password']
+        )
+
+        return redirect(url_for('user_profile'))
+
+
 @app.route('/admin')
 @admin_login_required
 def admin_dashboard(admin_user):
@@ -744,51 +636,7 @@ def admin_user_edit(id, admin_user):
 
 
 
-# !development
-@app.route('/video' , methods=["GET", "POST"])
-def test_video():
-    current_user = models.Users.objects.get(user_email = session['username'])
-
-    chapters = models.Videos.objects(tutorial_id_reference="5ffde0045c2f9acd0144c1d1").distinct(field="chapter_number")
-
-    if 'username' in session:
-        user = models.Users.objects.get(user_email = session['username'])
-
-        video_url = url_for('static', filename="videos/Chapter1_Lesson1_Geometry_Simplification_v0.1.mp4")
-
-        return render_template(
-            'test_video.html', 
-            video_url = video_url, 
-            current_user = current_user
-        )
-    else:
-        return redirect(url_for('login'))
-
-
-
-# USER PAGES
-@app.route('/profile' , methods=["GET", "POST"])
-@login_required
-def user_profile():
-    user = models.Users.objects.get(user_email = session['username'])
-
-    if request.method == "GET":
-        return render_template(
-            "update_profile.html",
-            current_user = user
-        )
-    elif request.method == "POST":
-        user.update(
-            id = user.id, 
-            first_name = request.form['user_first_name'],
-            last_name = request.form['user_last_name'], 
-            user_email = request.form['user_email'], 
-            user_password = request.form['user_password']
-        )
-
-        return redirect(url_for('user_profile'))
-
-
+# SINAS JOBS
 @app.route('/myjobs')
 @login_required
 def myjobs():
@@ -836,17 +684,161 @@ def myjobs():
     )
 
 
+@app.route('/sinas/delete/<id>')
+def delete_myjob(id):
+    if 'username' in session:
+        job = models.SinasJobTemplates.objects.get(id = id)
 
-# MISCELLANEOUS
-@app.route('/tutorials/<tutorial_id>/<chapter>/<lesson>/<filename>' , methods=["GET", "POST"])
-def send_tutorial_video(tutorial_id, chapter, lesson, filename):
-    folder = "/tutorials/" + tutorial_id + "/" + chapter + "/" + lesson
+        if job:
+            if job.job_owner == session['username']:
+                # delete files
+                shutil.rmtree(
+                    "/uploads/"+id,
+                    ignore_errors=True
+                )
 
-    return send_from_directory(
-        folder,
-        filename,
-        as_attachment = False
+                # delete from database
+                job.delete()
+
+                return redirect(request.referrer)
+            else:
+                return redirect(request.referrer)
+        else:
+            return redirect(request.referrer)
+
+
+@app.route('/download/<sinas_job_id>')
+def download_zip(sinas_job_id):
+    job_path = "/uploads/" + str(sinas_job_id) + "/"
+    base_path = pathlib.Path(job_path)
+    data = io.BytesIO()
+
+    with zipfile.ZipFile(data, mode='w') as z:
+        for f_name in base_path.iterdir():
+            z.write(f_name)
+
+    data.seek(0)
+    zip_filename = str(sinas_job_id) + ".zip"
+
+    return send_file(
+        data,
+        mimetype='application/zip',
+        as_attachment=True,
+        attachment_filename=zip_filename
     )
+
+
+@app.route('/sinas')
+def sinas():
+    button_input = request.args.get('button')
+    text_input = request.args.get('text')
+
+    if 'sinas_job_id' in session:    
+        if button_input:
+            job_template = models.SinasJobTemplates.objects.get(job_id = session['sinas_job_id'])
+
+            for i in range(len(job_template.template)):
+                if job_template.template[i].task_name == job_template.next_action:
+                    action_id = i
+
+            job_template.template[action_id].value = str(button_input)
+
+            job_template.template[action_id].valuePresent.value = True
+
+            if job_template.template[action_id].valuePresent.dependentOnThisParameter:
+                if job_template.template[action_id].value == "true":
+                    job_template.next_action = job_template.template[action_id].valuePresent.valueTrue
+                elif job_template.template[action_id].value == "false":
+                    job_template.next_action = job_template.template[action_id].valuePresent.valueFalse
+                else:
+                    job_template.next_action = job_template.template[action_id].valuePresent.valueTrue
+
+                write_to_ini(replace_value_variable(job_template.template[action_id].addToIni, job_template.template[action_id].value))
+
+            job_template.save()
+        elif text_input:
+            job_template = models.SinasJobTemplates.objects.get(job_id = session['sinas_job_id'])
+
+            for i in range(len(job_template.template)):
+                if job_template.template[i].task_name == job_template.next_action:
+                    action_id = i
+
+            job_template.template[action_id].value = text_input
+
+            job_template.template[action_id].valuePresent.value = True
+
+            if job_template.template[action_id].valuePresent.dependentOnThisParameter:
+                job_template.next_action = job_template.template[action_id].valuePresent.valueTrue
+
+                write_to_ini(replace_value_variable(job_template.template[action_id].addToIni, job_template.template[action_id].value))
+
+            job_template.save()
+        else:   
+            response = run_job(session['sinas_job_id'])
+
+        if 'no_response' in session:
+            while('no_response' in session):
+                response = run_job(session['sinas_job_id'])
+
+        return response
+
+
+
+# !development
+@app.route('/video' , methods=["GET", "POST"])
+def test_video():
+    current_user = models.Users.objects.get(user_email = session['username'])
+
+    chapters = models.Videos.objects(tutorial_id_reference="5ffde0045c2f9acd0144c1d1").distinct(field="chapter_number")
+
+    if 'username' in session:
+        user = models.Users.objects.get(user_email = session['username'])
+
+        video_url = url_for('static', filename="videos/Chapter1_Lesson1_Geometry_Simplification_v0.1.mp4")
+
+        return render_template(
+            'test_video.html', 
+            video_url = video_url, 
+            current_user = current_user
+        )
+    else:
+        return redirect(url_for('login'))
+
+# !development
+@app.route('/ru')
+def reset_users():
+    session.clear()
+    models.Users.objects.delete()
+
+    admin1Account = models.Users(
+        first_name = 'test admin',
+        last_name = '1',
+        user_email = 'admin1@nitrexo.com',
+        user_password = '1',
+        user_type = 'Admin'
+    )
+    admin1Account.save()
+
+    admin2Account = models.Users(
+        first_name = 'test admin',
+        last_name = '2',
+        user_email = 'admin2@nitrexo.com',
+        user_password = '1',
+        user_type = 'Admin'
+    )
+    admin2Account.save()
+
+    userAccount = models.Users(
+        first_name = 'test',
+        last_name = 'user',
+        user_email = 'user@nitrexo.com',
+        user_password = '1',
+        user_type = 'User'
+    )
+    userAccount.save()
+
+    return redirect(url_for('login'))
+
 
 
 
