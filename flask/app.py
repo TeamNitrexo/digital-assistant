@@ -1,7 +1,7 @@
 #####################
 ### Dependencies ###
 ####################
-import os, zipfile, io, pathlib, shutil
+import os, zipfile, io, pathlib, shutil, mimetypes
 from functools import wraps
 
 
@@ -33,6 +33,8 @@ from werkzeug.security import check_password_hash
 #######################
 ### Initialization ###
 ######################
+mimetypes.add_type('application/javascript', '.js')
+
 app = Flask(__name__)
 app.secret_key = global_modules.config.SECRET_KEY
 
@@ -82,11 +84,12 @@ def admin_login_required(viewFunction):
 def index():
     current_user = models.Users.objects(user_email__exact = session['username'])[0]
 
+    # temp?
     session['branch_set'] = False
     session['branch'] = ''
 
     return render_template(
-        'chatbot.html',
+        'Nchatbot.html',
         current_user = current_user
     )
 

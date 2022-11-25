@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+  {{ super() }}
+{% endblock %}
+
+{% block custom_stylesheets %}
+  <style>
+    #nitrexo-bot {
+      width: 100%;
+      height: 100%;
+    }
+    #nitrexo-bot .botui {
+      scrollbar-width: none;
+    }
+    #nitrexo-bot .botui::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+{% endblock %}
+
+{% block dashboard_content %}
+  <div class="container">
+    <div class="botui-app-container" id="nitrexo-bot">
+      <bot-ui></bot-ui>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/vue/latest/vue.min.js"></script>
+    <script src="{{ url_for('static', filename='js/chatbot/chatbot.js') }}" type="module"></script>
+  </div>
+{% endblock %}
