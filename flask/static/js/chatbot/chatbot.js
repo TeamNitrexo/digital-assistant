@@ -9,7 +9,7 @@ function suggestedResponses(delay) {
         BOT_UI.action.button({
             action: [
                 {
-                'text':'What is Thermo-elastic Verification?',
+                'text':'Thermo-elastic Verification',
                 'value':'tev'
                 },
                 {
@@ -17,7 +17,7 @@ function suggestedResponses(delay) {
                 'value':'perf-tmp'
                 },
                 {
-                'text':'What is Thermal Model Reduction?',
+                'text':'Thermal Model Reduction',
                 'value':'tmr'
                 },
                 {
