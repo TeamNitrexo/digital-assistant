@@ -32,8 +32,8 @@ function suggestedResponses(delay) {
         }).then(function (response) {
             if (response.value === 'tuts') {
                 BOT_UI.message.add({
-                    type: 'embed',
-                    content: 'https://www.youtube.com/embed/LaQj636PJh0'
+                    type: 'html',
+                    content: `<video src="static/tutorials/file.mp4" height="200" width="300" controls></video>`
                 });
 
                 BOT_UI.message.add({
@@ -44,14 +44,6 @@ function suggestedResponses(delay) {
 
                 suggestedResponses(2000);
             }
-
-
-
-            // url = '/message?reply=' + res.value
-
-            // $.get(url, function(data){
-            //     formatMessage(data);
-            // });
         });
     }, delay);
 };
