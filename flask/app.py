@@ -89,7 +89,7 @@ def index():
     session['branch'] = ''
 
     return render_template(
-        'Nchatbot.html',
+        'chatbot.html',
         current_user = current_user
     )
 
