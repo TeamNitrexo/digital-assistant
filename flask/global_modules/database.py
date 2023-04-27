@@ -1,9 +1,18 @@
-import mongoengine
-from .config import pymongo_MESSAGES_COLLECTION, pymongo_DB, pymongo_URI, mongoengine_DB
+from mongoengine import connect
+from .config import DB_HOSTNAME, DB_USER, DB_PASSWORD, MONGO_SERVICE_NAME, MONGO_SERVICE_PORT
 from pymongo import MongoClient
 
-mongo_client = MongoClient(pymongo_URI)
-db = mongo_client[pymongo_DB]
-col_messages = db[pymongo_MESSAGES_COLLECTION]
+DB_NAME = 'nitrexo'
+COLLECTION_NAME = 'messages'
 
-mongoengine.connect(mongoengine_DB)
+mongo_client = MongoClient(
+    host=DB_HOSTNAME,
+    port=MONGO_SERVICE_PORT,
+    username=DB_USER,
+    password=DB_PASSWORD,
+    authSource="admin"
+)
+db = mongo_client[DB_NAME]
+col_messages = db[COLLECTION_NAME]
+
+connect(host=f"mongodb://{DB_USER}:{DB_PASSWORD}@{MONGO_SERVICE_NAME}:{MONGO_SERVICE_PORT}/{DB_NAME}?authSource=admin")
