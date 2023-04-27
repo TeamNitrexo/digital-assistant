@@ -24,23 +24,23 @@ function suggestedResponses(delay) {
         BOT_UI.action.button({
             action: [
                 {
-                'text':'Thermo-elastic Verification',
+                'text':'What is Thermo-elastic Verification?',
                 'value':'tev'
                 },
                 {
-                'text':'Can you perform Temperature Mapping?',
+                'text':'Can you perform Temperature Mapping using SINAS?',
                 'value':'perf-tmp'
                 },
                 {
-                'text':'Thermal Model Reduction',
+                'text':'What is Thermal Model Reduction?',
                 'value':'tmr'
                 },
                 {
-                'text':'Can you perform Thermal Model Reduction?',
+                'text':'Can you perform Thermal Model Reduction using PythonOCC?',
                 'value':'perf-tmr'
                 },
                 {
-                'text':'Can I view the tutorials?',
+                'text':'Can I see the tutorials?',
                 'value':'tuts'
                 },
             ]
