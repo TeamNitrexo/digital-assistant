@@ -14,7 +14,7 @@ from global_modules.data import no_user_found
 
 
 ### FLASK DEPENDENCIES ###
-from flask import Flask, render_template, session, jsonify, request, send_file, redirect, url_for, send_from_directory, flash
+from flask import Flask, render_template, session, jsonify, request, send_file, redirect, url_for, flash
 
 
 ### MONGO DATABASE MODELS ###
@@ -78,7 +78,7 @@ def admin_login_required(viewFunction):
 ### Flask Routes ###
 ####################
 
-# DIGITAL ASSISTANT
+### DIGITAL ASSISTANT ###
 @app.route('/')
 @login_required
 def index():
@@ -457,7 +457,7 @@ def send_tutorial_video():
 
 
 
-# ACCOUNT LOGIN/LOGOUT & PROFILE
+### ACCOUNT LOGIN/LOGOUT & PROFILE ###
 @app.route('/logout')
 @login_required
 def logout():
@@ -488,7 +488,7 @@ def login():
 
 
 
-# USER/ADMIN PAGES
+### USER/ADMIN PAGES ###
 @app.route('/profile' , methods=["GET", "POST"])
 @login_required
 def user_profile():
@@ -646,7 +646,7 @@ def admin_user_edit(id, admin_user):
 
 
 
-# SINAS JOBS
+### SINAS JOBS ###
 @app.route('/myjobs')
 @login_required
 def myjobs():
@@ -794,25 +794,8 @@ def sinas():
 
 
 
-# !development
-@app.route('/video' , methods=["GET", "POST"])
-def test_video():
-    current_user = models.Users.objects.get(user_email = session['username'])
 
-    chapters = models.Videos.objects(tutorial_id_reference="5ffde0045c2f9acd0144c1d1").distinct(field="chapter_number")
 
-    if 'username' in session:
-        user = models.Users.objects.get(user_email = session['username'])
-
-        video_url = url_for('static', filename="videos/Chapter1_Lesson1_Geometry_Simplification_v0.1.mp4")
-
-        return render_template(
-            'test_video.html', 
-            video_url = video_url, 
-            current_user = current_user
-        )
-    else:
-        return redirect(url_for('login'))
 
 # !development
 @app.route('/ru')
