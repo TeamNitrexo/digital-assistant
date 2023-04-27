@@ -47,6 +47,12 @@ function getTutorial() {
       });
     }
     else {
+      BOT_UI.message.add({
+        delay: 1000,
+        type: 'text',
+        content: 'Unfortunately, there are no tutorial videos for this topic.'
+      });
+
       provideSuggestionsAgain();
     }
   });
