@@ -1,6 +1,5 @@
 venv
 .dockerignore
-docker-compose.yml
 mongo
 .vscode
 **/__pycache__

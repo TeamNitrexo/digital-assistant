@@ -1,0 +1,35 @@
+version: '1'
+
+services: 
+  rasa:
+    image: rasa/rasa:2.0.1-full
+    volumes:
+      - ./nitrexo-rasa:/app
+    command:
+      - run
+    ports:
+      - 5005:5005
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: NitroZiko83r
+    volumes:
+      - ./nitrexo-mongodb:/data/db
+    hostname: nitrexodb
+    ports:
+      - 27017:27017
+
+  flask:
+    build: ./flask # runs the Dockerfile in the flask folder
+    volumes: 
+      - ./flask:/app
+    depends_on: 
+      - rasa
+      - mongo
+    links:
+      - mongo
+    ports: 
+      - 5000:5000
