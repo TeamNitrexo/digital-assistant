@@ -1,6 +1,6 @@
 import {
   BOT_UI,
-  suggestedResponses
+  provideSuggestionsAgain
 } from "./chatbot.js";
 
 
@@ -25,31 +25,30 @@ function getTutorial() {
       });
     }
 
-    BOT_UI.action.button({
-      action: ACTIONS
-    }).then(function (response) {
-      path_to_tutorial_video += '/' + response.value;
+    if (ACTIONS.length > 0) {
+      BOT_UI.action.button({
+        action: ACTIONS
+      }).then(function (response) {
+        path_to_tutorial_video += '/' + response.value;
 
-      if (/.mp4$/.test(path_to_tutorial_video)) {
-        BOT_UI.message.add({
-            type: 'html',
-            content: `<video src="static/tutorials/${path_to_tutorial_video}" height="200" width="300" controls></video>`
-        });
+        if (/.mp4$/.test(path_to_tutorial_video)) {
+          BOT_UI.message.add({
+              type: 'html',
+              content: `<video src="static/tutorials/${path_to_tutorial_video}" height="200" width="300" controls></video>`
+          });
 
-        path_to_tutorial_video = '';
+          path_to_tutorial_video = '';
 
-        BOT_UI.message.add({
-          delay: 1000,
-          type: 'text',
-          content: 'Anything else?'
-        });
-
-        suggestedResponses(2000);
-      }
-      else {
-        getTutorial();
-      }
-    });
+          provideSuggestionsAgain();
+        }
+        else {
+          getTutorial();
+        }
+      });
+    }
+    else {
+      provideSuggestionsAgain();
+    }
   });
 
   REQUEST.open('POST', '/tutorials');
