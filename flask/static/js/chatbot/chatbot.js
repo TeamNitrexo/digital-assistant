@@ -31,18 +31,21 @@ function suggestedResponses(delay) {
             ]
         }).then(function (response) {
             if (response.value === 'tuts') {
-                BOT_UI.message.add({
-                    type: 'html',
-                    content: `<video src="static/tutorials/file.mp4" height="200" width="300" controls></video>`
+                // BOT_UI.message.add({
+                //     type: 'html',
+                //     content: `<video src="static/tutorials/file.mp4" height="200" width="300" controls></video>`
+                // });
+
+
+
+                const REQUEST = new XMLHttpRequest();
+
+                REQUEST.addEventListener('load', function (_) {
+                  const SUBDIRECTORIES = JSON.parse(REQUEST.response);
                 });
 
-                BOT_UI.message.add({
-                    delay: 1000,
-                    type: 'text',
-                    content: 'Anything else?'
-                });
-
-                suggestedResponses(2000);
+                REQUEST.open('POST', '/tutorials');
+                REQUEST.send();
             }
         });
     }, delay);

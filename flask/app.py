@@ -1,7 +1,7 @@
 #####################
 ### Dependencies ###
 ####################
-import os, zipfile, io, pathlib, shutil, mimetypes
+import os, zipfile, io, pathlib, shutil, mimetypes, json
 from functools import wraps
 
 
@@ -438,15 +438,11 @@ def upload():
         pass
 
 
-@app.route('/tutorials/<tutorial_id>/<chapter>/<lesson>/<filename>' , methods=["GET", "POST"])
-def send_tutorial_video(tutorial_id, chapter, lesson, filename):
-    folder = "/tutorials/" + tutorial_id + "/" + chapter + "/" + lesson
+@app.route('/tutorials' , methods=["GET", "POST"])
+def send_tutorial_video():
+    subdirectories = [ f.name for f in os.scandir('./static/tutorials') if f.is_dir() ]
 
-    return send_from_directory(
-        folder,
-        filename,
-        as_attachment = False
-    )
+    return json.dumps(subdirectories)
 
 
 
