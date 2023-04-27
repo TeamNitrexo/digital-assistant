@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+  {{ super() }}
+{% endblock %}
+
+
+{% block dashboard_content %}
+  <div class="container" style="margin-top: 30px;">
+    <h3 style="margin-bottom: 5%;">Tutorial Manager</h3>
+
+    <p>This is where admins can add, edit, or delete tutorial videos. It has yet to be created.</p>
+
+    <p>The videos are all stored in the static folder.</p>
+
+    <p>They can be rendered on a web page by using a video tag. Note that when specifying their paths in the source attribute, be sure that they start with the static folder's URL.</p>
+  </div>
+{% endblock %}

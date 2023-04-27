@@ -512,6 +512,15 @@ def admin_user_edit(id, admin_user):
         ))
 
 
+@app.route('/admin/tutorial-manager' , methods = ["GET", "POST"])
+@admin_login_required
+def admin_tutorial_manager(admin_user):
+    return render_template(
+        "tutorial_manager.html",
+        current_user=admin_user
+    )
+
+
 
 ### SINAS JOBS ###
 @app.route('/myjobs')
