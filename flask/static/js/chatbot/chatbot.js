@@ -1,8 +1,23 @@
 import "https://cdn.jsdelivr.net/npm/botui/build/botui.js";
+import { getTutorial } from "./tutorials";
 
 
 
 const BOT_UI = new BotUI('nitrexo-bot');
+
+function init_chatbot() {
+  BOT_UI.message.add({
+      content: 'Hi, I am Nitrexo\'s Digital Assistant'
+  }).then(function () {
+      BOT_UI.message.add({
+          delay: 1000,
+          content: 'How can I help you?'
+      });
+
+      suggestedResponses(2000);
+  });
+};
+init_chatbot();
 
 function suggestedResponses(delay) {
     setTimeout(() => {
@@ -31,36 +46,8 @@ function suggestedResponses(delay) {
             ]
         }).then(function (response) {
             if (response.value === 'tuts') {
-                // BOT_UI.message.add({
-                //     type: 'html',
-                //     content: `<video src="static/tutorials/file.mp4" height="200" width="300" controls></video>`
-                // });
-
-
-
-                const REQUEST = new XMLHttpRequest();
-
-                REQUEST.addEventListener('load', function (_) {
-                  const SUBDIRECTORIES = JSON.parse(REQUEST.response);
-                });
-
-                REQUEST.open('POST', '/tutorials');
-                REQUEST.send();
+              getTutorial();
             }
         });
     }, delay);
 };
-
-function init_chatbot() {
-    BOT_UI.message.add({
-        content: 'Hi, I am Nitrexo\'s Digital Assistant'
-    }).then(function () {
-        BOT_UI.message.add({
-            delay: 1000,
-            content: 'How can I help you?'
-        });
-
-        suggestedResponses(2000);
-    });
-};
-init_chatbot();
