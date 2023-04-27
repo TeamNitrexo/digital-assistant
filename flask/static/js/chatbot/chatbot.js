@@ -52,9 +52,19 @@ function suggestedResponses(delay) {
     }, delay);
 };
 
+function provideSuggestionsAgain() {
+  BOT_UI.message.add({
+    delay: 1000,
+    type: 'text',
+    content: 'Anything else?'
+  });
+
+  suggestedResponses(2000);
+};
+
 
 
 export {
   BOT_UI,
-  suggestedResponses
+  provideSuggestionsAgain
 };
