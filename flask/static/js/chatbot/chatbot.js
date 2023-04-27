@@ -55,5 +55,6 @@ function suggestedResponses(delay) {
 
 
 export {
-  BOT_UI
+  BOT_UI,
+  suggestedResponses
 };

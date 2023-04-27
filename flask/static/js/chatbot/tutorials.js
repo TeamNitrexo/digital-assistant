@@ -1,4 +1,7 @@
-import { BOT_UI } from "./chatbot.js";
+import {
+  BOT_UI,
+  suggestedResponses
+} from "./chatbot.js";
 
 
 
@@ -32,6 +35,14 @@ function getTutorial() {
             type: 'html',
             content: `<video src="static/tutorials/${path_to_tutorial_video}" height="200" width="300" controls></video>`
         });
+
+        BOT_UI.message.add({
+          delay: 1000,
+          type: 'text',
+          content: 'Anything else?'
+        });
+
+        suggestedResponses(2000);
       }
       else {
         getTutorial();
