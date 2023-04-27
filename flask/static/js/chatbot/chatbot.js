@@ -1,5 +1,5 @@
 import "https://cdn.jsdelivr.net/npm/botui/build/botui.js";
-import { getTutorial } from "./tutorials";
+import { getTutorial } from "./tutorials.js";
 
 
 
