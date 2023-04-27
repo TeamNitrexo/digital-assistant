@@ -14,7 +14,10 @@ function getTutorial() {
     const OPTIONS = JSON.parse(REQUEST.responseText);
     const NUM_OF_OPTIONS = OPTIONS.length;
 
-    const ACTIONS = [];
+    const ACTIONS = [{
+      'text': 'Go back',
+      'value': 'return'
+    }];
 
     for (let i=0; i < NUM_OF_OPTIONS; i++) {
       const OPTION = OPTIONS[i];
@@ -29,20 +32,35 @@ function getTutorial() {
       BOT_UI.action.button({
         action: ACTIONS
       }).then(function (response) {
-        path_to_tutorial_video += '/' + response.value;
+        if (response.value === 'return') {
+          if (path_to_tutorial_video.length === 0) {
+            provideSuggestionsAgain();
+          }
+          else {
+            const INDEX_OF_LAST_SLASH = path_to_tutorial_video.lastIndexOf('/');
 
-        if (/.mp4$/.test(path_to_tutorial_video)) {
-          BOT_UI.message.add({
-              type: 'html',
-              content: `<video src="static/tutorials/${path_to_tutorial_video}" height="200" width="300" controls></video>`
-          });
+            // resets path to the previous one
+            path_to_tutorial_video = path_to_tutorial_video.substring(0, INDEX_OF_LAST_SLASH);
 
-          path_to_tutorial_video = '';
-
-          provideSuggestionsAgain();
+            getTutorial();
+          }
         }
         else {
-          getTutorial();
+          path_to_tutorial_video += '/' + response.value;
+
+          if (/.mp4$/.test(path_to_tutorial_video)) {
+            BOT_UI.message.add({
+                type: 'html',
+                content: `<video src="static/tutorials/${path_to_tutorial_video}" height="200" width="300" controls></video>`
+            });
+
+            path_to_tutorial_video = '';
+
+            provideSuggestionsAgain();
+          }
+          else {
+            getTutorial();
+          }
         }
       });
     }
