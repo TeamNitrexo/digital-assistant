@@ -384,14 +384,12 @@ def user_profile():
 @admin_login_required
 def admin_dashboard(admin_user):
     user_count = models.Users.objects.count()
-    conversation_count = models.Conversations.objects.count()
     job_count = models.SinasJobTemplates.objects.count()
 
     return render_template(
         'dashboard.html', 
         current_user = admin_user, # this object is provided by the decorator 
-        user_count = user_count, 
-        conversation_count = conversation_count, 
+        user_count = user_count,
         job_count = job_count
     )
 
