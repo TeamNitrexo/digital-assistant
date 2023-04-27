@@ -46,14 +46,7 @@ function suggestedResponses(delay) {
             ]
         }).then(function (response) {
             if (response.value === 'tuts') {
-              const PATH_TO_TUTORIAL_VIDEO = getTutorial();
-
-              console.log(PATH_TO_TUTORIAL_VIDEO);
-
-              // BOT_UI.message.add({
-              //     type: 'html',
-              //     content: `<video src="static/tutorials/${PATH_TO_TUTORIAL_VIDEO}" height="200" width="300" controls></video>`
-              // });
+              getTutorial();
             }
         });
     }, delay);
