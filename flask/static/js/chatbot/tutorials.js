@@ -36,6 +36,8 @@ function getTutorial() {
             content: `<video src="static/tutorials/${path_to_tutorial_video}" height="200" width="300" controls></video>`
         });
 
+        path_to_tutorial_video = '';
+
         BOT_UI.message.add({
           delay: 1000,
           type: 'text',
