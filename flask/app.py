@@ -440,7 +440,7 @@ def upload():
 
 @app.route('/tutorials' , methods=["POST"])
 def send_tutorial_video():
-    current_path = f'./static/tutorials/{request.json}'
+    current_path = f'./static/tutorials{request.json}'
 
     return_arr = []
 
