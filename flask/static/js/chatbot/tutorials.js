@@ -49,6 +49,20 @@ function getTutorial() {
           path_to_tutorial_video += '/' + response.value;
 
           if (/.mp4$/.test(path_to_tutorial_video)) {
+            // removes existing videos
+            const EXISTING_VIDEOS = document.getElementsByTagName('video');
+            const NUM_OF_EXISTING_VIDEOS = EXISTING_VIDEOS.length;
+
+            for (let i=0; i < NUM_OF_EXISTING_VIDEOS; i++) {
+              const VIDEO = EXISTING_VIDEOS[i];
+
+              VIDEO.pause();
+              VIDEO.removeAttribute('src');
+              VIDEO.load();
+              VIDEO.parentElement.parentElement.remove();
+            }
+
+            // loads in new video
             BOT_UI.message.add({
                 type: 'html',
                 content: `<video src="static/tutorials/${path_to_tutorial_video}" height="200" width="300" controls></video>`
