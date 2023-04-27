@@ -438,11 +438,22 @@ def upload():
         pass
 
 
-@app.route('/tutorials' , methods=["GET", "POST"])
+@app.route('/tutorials' , methods=["POST"])
 def send_tutorial_video():
-    subdirectories = [ f.name for f in os.scandir('./static/tutorials') if f.is_dir() ]
+    current_path = f'./static/tutorials/{request.json}'
 
-    return json.dumps(subdirectories)
+    return_arr = []
+
+    subdirectories = [ f.name for f in os.scandir(current_path) if f.is_dir() ]
+
+    files = [ f.name for f in os.scandir(current_path) if f.is_file() ]
+
+    if len(files) > 0:
+        return_arr = files
+    elif len(subdirectories) > 0:
+        return_arr = subdirectories
+
+    return json.dumps(return_arr)
 
 
 
