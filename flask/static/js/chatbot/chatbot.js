@@ -25,16 +25,8 @@ function suggestedResponses(delay) {
     BOT_UI.action.button({
       action: [
         {
-          'text': 'What is Thermo-elastic Verification?',
-          'value': 'tev'
-        },
-        {
           'text': 'Can you perform Temperature Mapping using SINAS?',
           'value': 'perf-tmp'
-        },
-        {
-          'text': 'What is Thermal Model Reduction?',
-          'value': 'tmr'
         },
         {
           'text': 'Can you perform Thermal Model Reduction using PythonOCC?',
