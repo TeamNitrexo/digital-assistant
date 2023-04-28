@@ -1,5 +1,6 @@
 import "https://cdn.jsdelivr.net/npm/botui/build/botui.js";
 import { getTutorial } from "./tutorials.js";
+import { startThermalQnA } from "./thermal_qna.js";
 
 
 
@@ -40,6 +41,10 @@ function suggestedResponses(delay) {
           'value': 'perf-tmr'
         },
         {
+          'text': 'Can I ask you thermal-related questions?',
+          'value': 'qna'
+        },
+        {
           'text': 'Can I see the tutorials?',
           'value': 'tuts'
         },
@@ -47,6 +52,21 @@ function suggestedResponses(delay) {
     }).then(function (response) {
       if (response.value === 'tuts') {
         getTutorial();
+      }
+      else if (response.value === 'qna') {
+        BOT_UI.message.add({
+          delay: 1000,
+          type: 'text',
+          content: 'Of course!'
+        });
+
+        BOT_UI.message.add({
+          delay: 2000,
+          type: 'text',
+          content: 'What do you want to know?'
+        });
+
+        startThermalQnA();
       }
     });
   }, delay);
