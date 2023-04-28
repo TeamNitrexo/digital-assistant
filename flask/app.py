@@ -709,7 +709,7 @@ def reset_users():
     return redirect(url_for('login'))
 
 # !development
-@app.route('/tqna')
+@app.route('/rtqna')
 def reset_tqna():
     models.ThermalQnA.objects.delete()
 
