@@ -92,12 +92,6 @@ class Users(Document):
         super().update(**updatedInfo)
 
 
-class Conversations(Document):
-    message = StringField(max_length = 1000)
-
-    sender_email = EmailField()
-
-
 class Links(EmbeddedDocument):
     value = BooleanField()
 
