@@ -1,6 +1,6 @@
 import "https://cdn.jsdelivr.net/npm/botui/build/botui.js";
 import { getTutorial } from "./tutorials.js";
-import { startThermalQnA } from "./thermal_qna.js";
+import { getQuestions } from "./thermal_qna.js";
 
 
 
@@ -66,7 +66,7 @@ function suggestedResponses(delay) {
           content: 'What do you want to know?'
         });
 
-        startThermalQnA();
+        getQuestions();
       }
     });
   }, delay);

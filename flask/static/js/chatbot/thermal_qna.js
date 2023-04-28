@@ -64,12 +64,8 @@ function getAnswerToQuestion(question) {
   REQUEST.send(JSON.stringify(question));
 };
 
-function startThermalQnA() {
-  getQuestions();
-};
-
 
 
 export {
-  startThermalQnA
+  getQuestions
 };
