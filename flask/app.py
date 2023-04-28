@@ -107,6 +107,15 @@ def getThermalQnaQuestions():
 
     return json.dumps(questions)
 
+@app.route('/thermal-qna/answers', methods=['POST'])
+@login_required
+def getThermalQnaAnswers():
+    question = request.json
+
+    queryset = models.ThermalQnA.objects(question__exact=question)
+
+    return queryset[0].answer
+
 
 @app.route('/message')
 @login_required
