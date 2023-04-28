@@ -92,6 +92,15 @@ class Users(Document):
         super().update(**updatedInfo)
 
 
+class ThermalQnA(Document):
+    question = StringField(
+        min_length=2, # character + question mark
+        regex='?$' # must end in a question mark
+    )
+
+    answer = StringField(min_length=1)
+
+
 class Links(EmbeddedDocument):
     value = BooleanField()
 
