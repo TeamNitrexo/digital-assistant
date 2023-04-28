@@ -1,4 +1,7 @@
-import { BOT_UI } from "./chatbot.js";
+import {
+  BOT_UI,
+  provideSuggestionsAgain
+} from "./chatbot.js";
 
 
 
@@ -8,12 +11,15 @@ function getQuestions() {
   REQUEST.addEventListener('load', function (_) {
     const QUESTIONS = JSON.parse(REQUEST.responseText);
     const NUM_OF_QUESTIONS = QUESTIONS.length;
-    const ACTIONS = [];
+    const ACTIONS = [{
+      'text': 'Go back',
+      'value': 'return'
+    }];
 
     for (let i=0; i < NUM_OF_QUESTIONS; i++) {
       ACTIONS.push({
         'text': QUESTIONS[i],
-        'value': undefined
+        'value': 'question'
       });
     }
 
@@ -21,7 +27,12 @@ function getQuestions() {
       delay: 3000, // previous responses had a delay of 1000 and 2000 ms
       action: ACTIONS
     }).then(function (response) {
-      getAnswerToQuestion(response.text);
+      if (response.value === 'question') {
+        getAnswerToQuestion(response.text);
+      }
+      else if (response.value === 'return') {
+        provideSuggestionsAgain();
+      }
     });
   });
 
@@ -38,6 +49,14 @@ function getAnswerToQuestion(question) {
       type: 'text',
       content: REQUEST.responseText
     });
+
+    BOT_UI.message.add({
+      delay: 2000,
+      type: 'text',
+      content: 'What else do you want to know?'
+    });
+
+    getQuestions();
   });
 
   REQUEST.open('POST', '/thermal-qna/answers');
