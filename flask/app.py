@@ -94,6 +94,20 @@ def index():
     )
 
 
+@app.route('/thermal-qna/questions', methods=['POST'])
+@login_required
+def getThermalQnaQuestions():
+    queryset = models.ThermalQnA.objects.only('question')
+
+    questions = []
+
+    if len(queryset) > 0:
+        for result in queryset:
+            questions.append(result['question'])
+
+    return json.dumps(questions)
+
+
 @app.route('/message')
 @login_required
 def message():
@@ -308,6 +322,7 @@ def upload():
 
 
 @app.route('/tutorials' , methods=["POST"])
+@login_required
 def send_tutorial_video():
     current_path = f'./static/tutorials{request.json}'
 
