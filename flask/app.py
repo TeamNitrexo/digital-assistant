@@ -725,6 +725,8 @@ def reset_tqna():
     )
     tmm.save()
 
+    return redirect(url_for('login'))
+
 
 
 
