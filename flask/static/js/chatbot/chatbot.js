@@ -55,11 +55,13 @@ function suggestedResponses(delay) {
       }
       else if (response.value === 'qna') {
         BOT_UI.message.add({
+          delay: 1000,
           type: 'text',
           content: 'Of course!'
         });
 
         BOT_UI.message.add({
+          delay: 2000,
           type: 'text',
           content: 'What do you want to know?'
         });
