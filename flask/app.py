@@ -708,6 +708,23 @@ def reset_users():
 
     return redirect(url_for('login'))
 
+# !development
+@app.route('/tqna')
+def reset_tqna():
+    models.ThermalQnA.objects.delete()
+
+    gmm = models.ThermalQnA(
+        question="What is GMM?",
+        answer="Geometrical Mathemathical Model is a mathematical model in which an item and its surroundings are represented by radiation exchanging surfaces characterised by their thermo-optical properties."
+    )
+    gmm.save()
+
+    tmm = models.ThermalQnA(
+        question="What is TMM?",
+        answer="Thermal Mathematical Model is a numerical representation of an item and its surroundings represented by concentrated thermal capacitance nodes or elements coupled by a network made of thermal conductors like radiative conductive and convective."
+    )
+    tmm.save()
+
 
 
 
