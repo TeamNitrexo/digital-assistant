@@ -21,12 +21,28 @@ function getQuestions() {
       delay: 3000, // previous responses had a delay of 1000 and 2000 ms
       action: ACTIONS
     }).then(function (response) {
-      console.log(response.text);
+      getAnswerToQuestion(response.text);
     });
   });
 
   REQUEST.open('POST', '/thermal-qna/questions');
   REQUEST.send();
+};
+
+function getAnswerToQuestion(question) {
+  const REQUEST = new XMLHttpRequest();
+
+  REQUEST.addEventListener('load', function (_) {
+    BOT_UI.message.add({
+      delay: 1000,
+      type: 'text',
+      content: REQUEST.responseText
+    });
+  });
+
+  REQUEST.open('POST', '/thermal-qna/answers');
+  REQUEST.setRequestHeader('content-type', 'application/json');
+  REQUEST.send(JSON.stringify(question));
 };
 
 function startThermalQnA() {
