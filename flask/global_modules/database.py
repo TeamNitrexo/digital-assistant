@@ -3,7 +3,8 @@ from .config import DB_HOSTNAME, DB_USER, DB_PASSWORD, MONGO_SERVICE_NAME, MONGO
 from pymongo import MongoClient
 
 DB_NAME = 'nitrexo'
-COLLECTION_NAME = 'messages'
+COLLECTION_1_NAME = 'messages' # chatbot responses (OLD IMPLEMENTATION)
+COLLECTION_2_NAME = 'knowledge' # chatbot answers to thermal-related questions; Q&A are in 'tmr/data/Knowledge Base.csv' (NEW IMPLEMENTATION)
 
 mongo_client = MongoClient(
     host=DB_HOSTNAME,
@@ -13,6 +14,7 @@ mongo_client = MongoClient(
     authSource="admin"
 )
 db = mongo_client[DB_NAME]
-col_messages = db[COLLECTION_NAME]
+col_messages = db[COLLECTION_1_NAME]
+col_knowledge = db[COLLECTION_2_NAME]
 
 connect(host=f"mongodb://{DB_USER}:{DB_PASSWORD}@{MONGO_SERVICE_NAME}:{MONGO_SERVICE_PORT}/{DB_NAME}?authSource=admin")
