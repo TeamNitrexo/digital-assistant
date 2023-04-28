@@ -1,4 +1,4 @@
-import { BOT_UI } from "./chatbot";
+import { BOT_UI } from "./chatbot.js";
 
 
 
