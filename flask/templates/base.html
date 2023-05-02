@@ -31,21 +31,21 @@
         <div class="sidebar-heading">Nitrexo</div>
 
         <div class="list-group list-group-flush">
-          <a href="/" class="list-group-item list-group-item-action bg-light">Chatbot</a>
+          <a href="{{ url_for('index') }}" class="list-group-item list-group-item-action bg-light">Chatbot</a>
 
           {% if current_user.user_type == "Admin": %}
-            <a href="/admin" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+            <a href="{{ url_for('admin_dashboard') }}" class="list-group-item list-group-item-action bg-light">Dashboard</a>
 
-            <a href="/admin/tutorial-manager" class="list-group-item list-group-item-action bg-light">Tutorial Manager</a>
+            <a href="{{ url_for('admin_tutorial_manager') }}" class="list-group-item list-group-item-action bg-light">Tutorial Manager</a>
 
-            <a href="/admin/thermal-qna-manager" class="list-group-item list-group-item-action bg-light">Thermal Q&A Manager</a>
+            <a href="{{ url_for('admin_thermal_qna_manager') }}" class="list-group-item list-group-item-action bg-light">Thermal Q&A Manager</a>
 
-            <a href="/admin/users" class="list-group-item list-group-item-action bg-light">Users</a>
+            <a href="{{ url_for('admin_users_dashboard') }}" class="list-group-item list-group-item-action bg-light">Users</a>
           {% endif %}
 
-          <a href="/myjobs" class="list-group-item list-group-item-action bg-light">My Sinas Jobs</a>
+          <a href="{{ url_for('myjobs') }}" class="list-group-item list-group-item-action bg-light">My Sinas Jobs</a>
 
-          <a href="/profile" class="list-group-item list-group-item-action bg-light">Profile</a>
+          <a href="{{ url_for('user_profile') }}" class="list-group-item list-group-item-action bg-light">Profile</a>
         </div>
       </div>
     {% endblock %}
@@ -72,7 +72,7 @@
               </a>
 
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/logout">Logout</a>
+                <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
               </div>
             </li>
           </ul>
