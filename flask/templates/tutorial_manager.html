@@ -15,7 +15,17 @@
 
     <p>They can be rendered on a web page by using a video tag. Note that when specifying their paths in the source attribute, be sure that they start with the static folder's URL.</p>
 
-    <div style="margin-top: 12%;">
+    <form action="{{ url_for('admin_tutorial_manager') }}" method="POST" style="margin-top: 12%;">
+      <h3>Delete</h3>
+
+      <input class="form-control" type="number" placeholder="Chapter number" style="margin-top: 5%;">
+
+      <input class="form-control" type="number" placeholder="Lesson number" style="margin-top: 5%;">
+
+      <button type="submit" class="btn btn-primary" style="margin-top: 5%;">Delete</button>
+    </form>
+
+    <div style="margin: 12% 0;">
       <h3>Available Tutorials</h3>
 
       {% for chapter in tutorials %}
