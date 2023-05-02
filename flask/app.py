@@ -452,32 +452,35 @@ def admin_user_edit(id, admin_user):
 @app.route('/admin/tutorial-manager' , methods = ["GET", "POST"])
 @admin_login_required
 def admin_tutorial_manager(admin_user):
-    PATH_TO_TUTORIALS = './static/tutorials'
+    if request.method == 'POST':
+        return redirect(url_for('admin_tutorial_manager'))
+    else:
+        PATH_TO_TUTORIALS = './static/tutorials'
 
-    tutorial_paths = []
+        tutorial_paths = []
 
-    for root, _, files in os.walk(PATH_TO_TUTORIALS):
-        for file in files:
-            if file.endswith('.mp4'):
-                tutorial_paths.append(os.path.join(root, file).replace(PATH_TO_TUTORIALS, '').replace(' - ', ': ').replace('.mp4', ''))
+        for root, _, files in os.walk(PATH_TO_TUTORIALS):
+            for file in files:
+                if file.endswith('.mp4'):
+                    tutorial_paths.append(os.path.join(root, file).replace(PATH_TO_TUTORIALS, '').replace(' - ', ': ').replace('.mp4', ''))
 
-    tutorials = {}
+        tutorials = {}
 
-    for p in tutorial_paths:
-        path_parts = p.split('/')
+        for p in tutorial_paths:
+            path_parts = p.split('/')
 
-        chapter = path_parts[1]
+            chapter = path_parts[1]
 
-        if chapter not in tutorials:
-            tutorials[chapter] = []
+            if chapter not in tutorials:
+                tutorials[chapter] = []
 
-        tutorials[chapter].append(f'{path_parts[2]}: {path_parts[3]}')
+            tutorials[chapter].append(f'{path_parts[2]}: {path_parts[3]}')
 
-    return render_template(
-        "tutorial_manager.html",
-        current_user=admin_user,
-        tutorials=tutorials
-    )
+        return render_template(
+            "tutorial_manager.html",
+            current_user=admin_user,
+            tutorials=tutorials
+        )
 
 
 @app.route('/admin/thermal-qna-manager' , methods = ["GET", "POST"])
