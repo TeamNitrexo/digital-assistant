@@ -11,7 +11,17 @@
 
     <p>This is where admins can add, edit, or delete thermal questions and answers.</p>
 
-    <table class="table" style="margin-top: 10%;">
+    <form action="{{ url_for('admin_thermal_qna_manager') }}" method="post" class="d-flex flex-column" style="margin-top: 10%;">
+      <h4>Add Q&A</h4>
+
+      <input class="form-control" type="text" name="question" placeholder="Question">
+
+      <textarea class="form-control" name="answer" placeholder="Answer" style="margin-top: 5%; height: 200px; resize: none;"></textarea>
+
+      <button type="submit" class="btn btn-primary mb-2" style="margin-top: 5%;">Add</button>
+    </form>
+
+    <table class="table" style="margin-top: 20%;">
       <thead>
         <tr>
           <th scope="col">Questions</th>
@@ -23,12 +33,12 @@
       <tbody>
         {% for object in stored_qna %}
           <tr>
-            <td>{{ object.question }}</td>
+            <td data-id="{{ object.id }}">{{ object.question }}</td>
             <td>{{ object.answer }}</td>
             <td class="d-flex flex-column">
               <a class="btn btn-outline-primary" href="#" role="button" style="margin-bottom: 10%;">Edit</a>
 
-              <a class="btn btn-outline-danger" href="#" role="button" style="margin-bottom: 10%;">Delete</a>
+              <a class="btn btn-outline-danger" href="#" role="button">Delete</a>
             </td>
           </tr>
         {% endfor %}
