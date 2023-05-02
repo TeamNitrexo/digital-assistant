@@ -472,7 +472,13 @@ def admin_thermal_qna_manager(admin_user):
             newQnA.save()
 
         return redirect(url_for('admin_thermal_qna_manager'))
-    elif request.method == 'GET':
+    elif request.method == 'GET' and request.args.get('delete') != None:
+        QnA_object_id = request.args.get('delete')
+
+        models.ThermalQnA.objects(id=QnA_object_id).delete()
+
+        return redirect(url_for('admin_thermal_qna_manager'))
+    else:
         queryset = models.ThermalQnA.objects
 
         return render_template(
