@@ -107,6 +107,7 @@ def getThermalQnaQuestions():
 
     return json.dumps(questions)
 
+
 @app.route('/thermal-qna/answers', methods=['POST'])
 @login_required
 def getThermalQnaAnswers():
@@ -240,94 +241,6 @@ def message():
     response.headers.add("Access-Control-Allow-Origin", "*")
 
     return response
-
-
-@app.route('/upload', methods=['GET', 'POST'])
-def upload():
-    if not 'username' in session:
-        session.pop('username')
-        return jsonify(no_user_found)
-
-    if session.get('tmr_job_id'):
-        if request.method == 'POST':
-            # check if the post request has the file part
-            if 'file' not in request.files:
-                return { 'status' : 'File not present.'}
-
-            file = request.files['file']
-
-            # if user does not select file, submit an empty part without filename
-            if file.filename == '':
-                return { 'status' : 'File name invalid.'}
-
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                new_filename = "file" + os.path.splitext(filename)[1]
-
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], session['tmr_job_id'], new_filename))
-
-                job_template = models.SinasJobTemplates.objects.get(job_id = session['tmr_job_id'])
-
-                for i in range(len(job_template.template)):
-                    if job_template.template[i].task_name == job_template.next_action:
-                        action_id = i
-
-                job_template.template[action_id].uploaded.value = True
-                job_template.template[action_id].value = new_filename
-
-                if job_template.template[action_id].uploaded.dependentOnThisParameter:
-                    job_template.next_action = job_template.template[action_id].uploaded.valueTrue
-
-                job_template.save()
-
-        response = run_job(job_template.job_id)
-
-        return response
-
-    if session.get('sinas_job_id'):
-        if request.method == 'POST':
-            # check if the post request has the file part
-            if 'file' not in request.files:
-                return { 'status' : 'File not present.'}
-
-            file = request.files['file']
-
-            # if user does not select file, submit an empty part without filename
-            if file.filename == '':
-                return { 'status' : 'File name invalid.'}
-
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                new_filename = "file" + os.path.splitext(filename)[1]
-
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], session['sinas_job_id'], new_filename))
-
-                job_template = models.SinasJobTemplates.objects.get(job_id = session['sinas_job_id'])
-
-                for i in range(len(job_template.template)):
-                    if job_template.template[i].task_name == job_template.next_action:
-                        action_id = i
-
-                job_template.template[action_id].uploaded.value = True
-                job_template.template[action_id].value = new_filename
-
-                if job_template.template[action_id].uploaded.dependentOnThisParameter:
-                    job_template.next_action = job_template.template[action_id].uploaded.valueTrue
-
-                    write_to_ini(replace_value_variable(job_template.template[action_id].addToIni, job_template.template[action_id].value))
-
-                job_template.save()
-
-        response = run_job(job_template.job_id)
-
-        if 'no_response' in session:
-            while('no_response' in session):
-                response = run_job(session['sinas_job_id'])
-
-        return response
-    else:
-        # return to main task if job id doesn't exist in session
-        pass
 
 
 @app.route('/tutorials' , methods=["POST"])
@@ -556,6 +469,94 @@ def admin_thermal_qna_manager(admin_user):
 
 
 ### SINAS JOBS ###
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if not 'username' in session:
+        session.pop('username')
+        return jsonify(no_user_found)
+
+    if session.get('tmr_job_id'):
+        if request.method == 'POST':
+            # check if the post request has the file part
+            if 'file' not in request.files:
+                return { 'status' : 'File not present.'}
+
+            file = request.files['file']
+
+            # if user does not select file, submit an empty part without filename
+            if file.filename == '':
+                return { 'status' : 'File name invalid.'}
+
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                new_filename = "file" + os.path.splitext(filename)[1]
+
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], session['tmr_job_id'], new_filename))
+
+                job_template = models.SinasJobTemplates.objects.get(job_id = session['tmr_job_id'])
+
+                for i in range(len(job_template.template)):
+                    if job_template.template[i].task_name == job_template.next_action:
+                        action_id = i
+
+                job_template.template[action_id].uploaded.value = True
+                job_template.template[action_id].value = new_filename
+
+                if job_template.template[action_id].uploaded.dependentOnThisParameter:
+                    job_template.next_action = job_template.template[action_id].uploaded.valueTrue
+
+                job_template.save()
+
+        response = run_job(job_template.job_id)
+
+        return response
+
+    if session.get('sinas_job_id'):
+        if request.method == 'POST':
+            # check if the post request has the file part
+            if 'file' not in request.files:
+                return { 'status' : 'File not present.'}
+
+            file = request.files['file']
+
+            # if user does not select file, submit an empty part without filename
+            if file.filename == '':
+                return { 'status' : 'File name invalid.'}
+
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                new_filename = "file" + os.path.splitext(filename)[1]
+
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], session['sinas_job_id'], new_filename))
+
+                job_template = models.SinasJobTemplates.objects.get(job_id = session['sinas_job_id'])
+
+                for i in range(len(job_template.template)):
+                    if job_template.template[i].task_name == job_template.next_action:
+                        action_id = i
+
+                job_template.template[action_id].uploaded.value = True
+                job_template.template[action_id].value = new_filename
+
+                if job_template.template[action_id].uploaded.dependentOnThisParameter:
+                    job_template.next_action = job_template.template[action_id].uploaded.valueTrue
+
+                    write_to_ini(replace_value_variable(job_template.template[action_id].addToIni, job_template.template[action_id].value))
+
+                job_template.save()
+
+        response = run_job(job_template.job_id)
+
+        if 'no_response' in session:
+            while('no_response' in session):
+                response = run_job(session['sinas_job_id'])
+
+        return response
+    else:
+        # return to main task if job id doesn't exist in session
+        pass
+
+
 @app.route('/myjobs')
 @login_required
 def myjobs():
