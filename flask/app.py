@@ -461,9 +461,12 @@ def admin_tutorial_manager(admin_user):
 @app.route('/admin/thermal-qna-manager' , methods = ["GET", "POST"])
 @admin_login_required
 def admin_thermal_qna_manager(admin_user):
+    queryset = models.ThermalQnA.objects
+
     return render_template(
         "thermal_qna_manager.html",
-        current_user=admin_user
+        current_user=admin_user,
+        stored_qna=queryset # array of ThermalQnA objects
     )
 
 
