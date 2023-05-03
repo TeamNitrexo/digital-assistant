@@ -483,6 +483,34 @@ def admin_tutorial_manager(admin_user):
             chapter_title = request.form['ctitle']
             lesson_video = request.files['lvid']
 
+            chapter = f'Chapter {chapter_number}'
+            chapter_folder_name = f'{chapter} - {chapter_title}'
+
+            full_tutorial_folder_path = f'{PATH_TO_TUTORIALS}/{chapter_folder_name}/Lesson {lesson_number}'
+
+            for root, dirs, _ in os.walk(PATH_TO_TUTORIALS):
+                for d in dirs:
+                    if chapter in d:
+                        if chapter_title != '':
+                            # if chapter folder already exists and a new title was provided, rename the chapter folder
+                            new_chapter_folder_path = os.path.join(root, chapter_folder_name)
+
+                            os.rename(os.path.join(root, d), new_chapter_folder_path)
+                        else:
+                            # if chapter folder already exists and it's not being renamed
+                            full_tutorial_folder_path = f'{PATH_TO_TUTORIALS}/{d}/Lesson {lesson_number}'
+
+                        if os.path.isdir(full_tutorial_folder_path) == False:
+                            # creates lesson folder if it doesn't exist already
+                            os.system(f'mkdir -p "{full_tutorial_folder_path}"')
+
+                        lesson_video.save(os.path.join(full_tutorial_folder_path, secure_filename(lesson_video.filename)))
+                    else:
+                        # if chapter doesn't exist, create a new folder for it
+                        os.system(f'mkdir -p "{full_tutorial_folder_path}"')
+
+                        lesson_video.save(os.path.join(full_tutorial_folder_path, secure_filename(lesson_video.filename)))
+
         return redirect(url_for('admin_tutorial_manager'))
     else:
         tutorial_paths = []
