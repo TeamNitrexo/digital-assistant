@@ -480,7 +480,8 @@ def admin_tutorial_manager(admin_user):
 
                             os.system(f'rm -r "{path_to_chapter_folder}"')
         elif action == 'add':
-            pass
+            chapter_title = request.form['ctitle']
+            lesson_video = request.files['lvid']
 
         return redirect(url_for('admin_tutorial_manager'))
     else:
