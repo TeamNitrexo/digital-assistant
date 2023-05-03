@@ -15,12 +15,30 @@
 
     <p>They can be rendered on a web page by using a video tag. Note that when specifying their paths in the source attribute, be sure that they start with the static folder's URL.</p>
 
+    <form action="{{ url_for('admin_tutorial_manager') }}" method="POST" enctype="multipart/form-data" style="margin-top: 12%;">
+      <h3>Add Tutorial</h3>
+
+      <input type="text" name="action" value="add" hidden>
+
+      <input class="form-control" type="number" placeholder="Chapter number" min="1" step="1" name="cnum" style="margin-top: 5%;" required>
+
+      <input class="form-control" type="text" placeholder="Chapter title" name="ctitle" style="margin-top: 5%;" required>
+
+      <input class="form-control" type="number" placeholder="Lesson number" min="1" step="1" name="lnum" style="margin-top: 5%;" required>
+
+      <input class="form-control" type="text" placeholder="Lesson title" name="ltitle" style="margin-top: 5%;" required>
+
+      <input class="form-control form-control-sm" type="file" accept=".mp4" style="margin-top: 5%;">
+
+      <button type="submit" class="btn btn-primary" style="margin-top: 5%;">Add</button>
+    </form>
+
     <form action="{{ url_for('admin_tutorial_manager') }}" method="POST" style="margin-top: 12%;">
-      <h3>Delete</h3>
+      <h3>Delete Chapter/Lesson</h3>
 
       <input type="text" name="action" value="delete" hidden>
 
-      <input class="form-control" type="number" placeholder="Chapter number" min="1" step="1" name="cnum" style="margin-top: 5%;">
+      <input class="form-control" type="number" placeholder="Chapter number" min="1" step="1" name="cnum" style="margin-top: 5%;" required>
 
       <input class="form-control" type="number" placeholder="Lesson number" min="1" step="1" name="lnum" style="margin-top: 5%;">
 

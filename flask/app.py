@@ -466,19 +466,21 @@ def admin_tutorial_manager(admin_user):
                 # deletes lesson folder
                 lesson = f'Lesson {lesson_number}'
 
-                for root, _, _ in os.walk(f'./static/fake'):
+                for root, _, _ in os.walk(PATH_TO_TUTORIALS):
                     if chapter in root and lesson in root:
                         path_to_lesson_folder = root
 
                         os.system(f'rm -r "{path_to_lesson_folder}"')
             else:
                 # deletes chapter folder
-                for root, dirs, _ in os.walk(f'./static/fake'):
+                for root, dirs, _ in os.walk(PATH_TO_TUTORIALS):
                     for d in dirs:
                         if chapter in d:
                             path_to_chapter_folder = os.path.join(root, d)
 
                             os.system(f'rm -r "{path_to_chapter_folder}"')
+        elif action == 'add':
+            pass
 
         return redirect(url_for('admin_tutorial_manager'))
     else:
