@@ -35,6 +35,8 @@ from werkzeug.security import check_password_hash
 ######################
 mimetypes.add_type('application/javascript', '.js')
 
+PATH_TO_TUTORIALS = './static/tutorials'
+
 app = Flask(__name__)
 app.secret_key = global_modules.config.SECRET_KEY
 
@@ -453,10 +455,27 @@ def admin_user_edit(id, admin_user):
 @admin_login_required
 def admin_tutorial_manager(admin_user):
     if request.method == 'POST':
+        action = request.form['action']
+        chapter_number = request.form['cnum']
+        lesson_number = request.form['lnum']
+
+        if action == 'delete':
+            chapter = f'Chapter {chapter_number}'
+
+            if lesson_number != '':
+                # deletes lesson folder
+                pass
+            else:
+                # deletes chapter folder
+                for root, dirs, files in os.walk(f'./static/fake'):
+                    for d in dirs:
+                        if chapter in d:
+                            path_to_chapter_folder = os.path.join(root, d)
+
+                            os.system(f'rm -r "{path_to_chapter_folder}"')
+
         return redirect(url_for('admin_tutorial_manager'))
     else:
-        PATH_TO_TUTORIALS = './static/tutorials'
-
         tutorial_paths = []
 
         for root, _, files in os.walk(PATH_TO_TUTORIALS):
