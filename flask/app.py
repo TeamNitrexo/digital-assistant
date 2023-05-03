@@ -464,10 +464,16 @@ def admin_tutorial_manager(admin_user):
 
             if lesson_number != '':
                 # deletes lesson folder
-                pass
+                lesson = f'Lesson {lesson_number}'
+
+                for root, _, _ in os.walk(f'./static/fake'):
+                    if chapter in root and lesson in root:
+                        path_to_lesson_folder = root
+
+                        os.system(f'rm -r "{path_to_lesson_folder}"')
             else:
                 # deletes chapter folder
-                for root, dirs, files in os.walk(f'./static/fake'):
+                for root, dirs, _ in os.walk(f'./static/fake'):
                     for d in dirs:
                         if chapter in d:
                             path_to_chapter_folder = os.path.join(root, d)
